@@ -1,0 +1,15 @@
+{
+  "name": "dd-legacy-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordeno/bot": "^19.0.0-next.918cee2",
+    "typescript": "^4.9.5"
+  }
+}
