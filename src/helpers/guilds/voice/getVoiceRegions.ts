@@ -13,17 +13,20 @@ import { Collection } from "../../../util/collection.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-voice-regions}
  */
-export async function getVoiceRegions(bot: Bot, guildId: BigString): Promise<Collection<string, VoiceRegions>> {
+export async function getVoiceRegions(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<Collection<string, VoiceRegions>> {
   const results = await bot.rest.runMethod<DiscordVoiceRegion[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_REGIONS(guildId),
+    bot.constants.routes.GUILD_REGIONS(guildId)
   );
 
   return new Collection(
     results.map((result) => {
       const region = bot.transformers.voiceRegion(bot, result);
       return [region.id, region];
-    }),
+    })
   );
 }

@@ -1,14 +1,14 @@
-import { Bot } from "../bot.js";
+import { LegacyBot } from "../index.js";
 import {
   ButtonStyles,
   MessageComponentTypes,
   SelectOption,
   TextStyles,
 } from "../mod.js";
-import { DiscordComponent } from "../types/discord.js";
+import { DiscordComponent } from "@discordeno/types";
 
 export function transformComponent(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordComponent
 ): Component {
   return {

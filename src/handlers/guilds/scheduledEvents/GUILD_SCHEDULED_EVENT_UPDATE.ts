@@ -5,7 +5,7 @@ import {
 } from "../../../types/discord.js";
 
 export function handleGuildScheduledEventUpdate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   const payload = data.d as DiscordScheduledEvent;

@@ -1,5 +1,9 @@
 import type { Bot } from "../../bot.ts";
-import { BigString, GatewayIntents, GatewayOpcodes } from "../../types/shared.ts";
+import {
+  BigString,
+  GatewayIntents,
+  GatewayOpcodes,
+} from "../../types/shared.ts";
 import { calculateShardId } from "../../util/calculateShardId.ts";
 
 /**
@@ -27,13 +31,17 @@ import { calculateShardId } from "../../util/calculateShardId.ts";
  * @see {@link https://discord.com/developers/docs/topics/gateway#request-guild-members}
  */
 export function fetchMembers(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  options?: Omit<RequestGuildMembers, "guildId">,
+  options?: Omit<RequestGuildMembers, "guildId">
 ): Promise<void> {
   // You can request 1 member without the intent
   // Check if intents is not 0 as proxy ws won't set intents in other instances
-  if (bot.intents && (!options?.limit || options.limit > 1) && !(bot.intents & GatewayIntents.GuildMembers)) {
+  if (
+    bot.intents &&
+    (!options?.limit || options.limit > 1) &&
+    !(bot.intents & GatewayIntents.GuildMembers)
+  ) {
     throw new Error(bot.constants.Errors.MISSING_INTENT_GUILD_MEMBERS);
   }
 
@@ -41,7 +49,10 @@ export function fetchMembers(
     options.limit = options.userIds.length;
   }
 
-  const shardId = calculateShardId(bot.gateway, bot.transformers.snowflake(guildId));
+  const shardId = calculateShardId(
+    bot.gateway,
+    bot.transformers.snowflake(guildId)
+  );
 
   return new Promise((resolve) => {
     const nonce = `${guildId}-${Date.now()}`;

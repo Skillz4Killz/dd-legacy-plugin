@@ -18,21 +18,28 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#bulk-delete-messages}
  */
 export async function deleteMessages(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   messageIds: BigString[],
-  reason?: string,
+  reason?: string
 ): Promise<void> {
   if (messageIds.length < 2) {
     throw new Error(bot.constants.Errors.DELETE_MESSAGES_MIN);
   }
 
   if (messageIds.length > 100) {
-    console.warn(`This endpoint only accepts a maximum of 100 messages. Using the first 100 message ids provided.`);
+    console.warn(
+      `This endpoint only accepts a maximum of 100 messages. Using the first 100 message ids provided.`
+    );
   }
 
-  return await bot.rest.runMethod<void>(bot.rest, "POST", bot.constants.routes.CHANNEL_BULK_DELETE(channelId), {
-    messages: messageIds.slice(0, 100).map((id) => id.toString()),
-    reason,
-  });
+  return await bot.rest.runMethod<void>(
+    bot.rest,
+    "POST",
+    bot.constants.routes.CHANNEL_BULK_DELETE(channelId),
+    {
+      messages: messageIds.slice(0, 100).map((id) => id.toString()),
+      reason,
+    }
+  );
 }

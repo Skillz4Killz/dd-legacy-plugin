@@ -15,10 +15,14 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild-template#delete-guild-template}
  */
-export async function deleteGuildTemplate(bot: Bot, guildId: BigString, templateCode: string): Promise<void> {
+export async function deleteGuildTemplate(
+  bot: LegacyBot,
+  guildId: BigString,
+  templateCode: string
+): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
-    bot.constants.routes.GUILD_TEMPLATE(guildId, templateCode),
+    bot.constants.routes.GUILD_TEMPLATE(guildId, templateCode)
   );
 }

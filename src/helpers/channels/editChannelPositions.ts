@@ -18,9 +18,9 @@ export const swapChannels = editChannelPositions;
  * @see {@link https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions}
  */
 export async function editChannelPositions(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  channelPositions: ModifyGuildChannelPositions[],
+  channelPositions: ModifyGuildChannelPositions[]
 ): Promise<void> {
   if (!channelPositions.length) {
     throw new Error("You must provide at least one channels to be moved.");
@@ -35,7 +35,7 @@ export async function editChannelPositions(
       position: channelPosition.position,
       lock_positions: channelPosition.lockPositions,
       parent_id: channelPosition.parentId,
-    })),
+    }))
   );
 }
 

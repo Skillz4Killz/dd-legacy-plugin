@@ -16,11 +16,16 @@ import { Sticker } from "../../transformers/sticker.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/sticker#delete-guild-sticker}
  */
-export async function deleteGuildSticker(bot: Bot, guildId: bigint, stickerId: bigint, reason?: string): Promise<void> {
+export async function deleteGuildSticker(
+  bot: LegacyBot,
+  guildId: bigint,
+  stickerId: bigint,
+  reason?: string
+): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
     bot.constants.routes.GUILD_STICKER(guildId, stickerId),
-    reason ? { reason } : undefined,
+    reason ? { reason } : undefined
   );
 }

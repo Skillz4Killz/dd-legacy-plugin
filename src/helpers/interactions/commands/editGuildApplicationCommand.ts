@@ -1,6 +1,10 @@
 import type { Bot } from "../../../bot.ts";
 import { ApplicationCommand } from "../../../transformers/applicationCommand.ts";
-import { BigString, CreateApplicationCommand, DiscordApplicationCommand } from "../../../types/mod.ts";
+import {
+  BigString,
+  CreateApplicationCommand,
+  DiscordApplicationCommand,
+} from "../../../types/mod.ts";
 
 // TODO: Swap `commandId` and `guildId` parameters.
 
@@ -16,16 +20,20 @@ import { BigString, CreateApplicationCommand, DiscordApplicationCommand } from "
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command}
  */
 export async function editGuildApplicationCommand(
-  bot: Bot,
+  bot: LegacyBot,
   commandId: BigString,
   guildId: BigString,
-  options: CreateApplicationCommand,
+  options: CreateApplicationCommand
 ): Promise<ApplicationCommand> {
   const result = await bot.rest.runMethod<DiscordApplicationCommand>(
     bot.rest,
     "PATCH",
-    bot.constants.routes.COMMANDS_GUILD_ID(bot.applicationId, guildId, commandId),
-    bot.transformers.reverse.createApplicationCommand(bot, options),
+    bot.constants.routes.COMMANDS_GUILD_ID(
+      bot.applicationId,
+      guildId,
+      commandId
+    ),
+    bot.transformers.reverse.createApplicationCommand(bot, options)
   );
 
   return bot.transformers.applicationCommand(bot, result);

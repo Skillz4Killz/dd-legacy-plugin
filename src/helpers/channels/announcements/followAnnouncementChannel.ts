@@ -18,9 +18,9 @@ import { BigString } from "../../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#follow-announcement-channel}
  */
 export async function followAnnouncementChannel(
-  bot: Bot,
+  bot: LegacyBot,
   sourceChannelId: BigString,
-  targetChannelId: BigString,
+  targetChannelId: BigString
 ): Promise<bigint> {
   const result = await bot.rest.runMethod<DiscordFollowedChannel>(
     bot.rest,
@@ -28,7 +28,7 @@ export async function followAnnouncementChannel(
     bot.constants.routes.CHANNEL_FOLLOW(sourceChannelId),
     {
       webhook_channel_id: targetChannelId,
-    },
+    }
   );
 
   return bot.transformers.snowflake(result.webhook_id);

@@ -16,11 +16,14 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen}
  */
-export async function getWelcomeScreen(bot: Bot, guildId: BigString): Promise<WelcomeScreen> {
+export async function getWelcomeScreen(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<WelcomeScreen> {
   const result = await bot.rest.runMethod<DiscordWelcomeScreen>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_WELCOME_SCREEN(guildId),
+    bot.constants.routes.GUILD_WELCOME_SCREEN(guildId)
   );
 
   return bot.transformers.welcomeScreen(bot, result);

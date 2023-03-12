@@ -14,19 +14,19 @@ import { Collection } from "../../../util/collection.ts";
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#get-global-application-commandss}
  */
 export async function getGuildApplicationCommands(
-  bot: Bot,
-  guildId: BigString,
+  bot: LegacyBot,
+  guildId: BigString
 ): Promise<Collection<bigint, ApplicationCommand>> {
   const results = await bot.rest.runMethod<DiscordApplicationCommand[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.COMMANDS_GUILD(bot.applicationId, guildId),
+    bot.constants.routes.COMMANDS_GUILD(bot.applicationId, guildId)
   );
 
   return new Collection(
     results.map((result) => {
       const command = bot.transformers.applicationCommand(bot, result);
       return [command.id, command];
-    }),
+    })
   );
 }

@@ -18,14 +18,20 @@ interface DiscordPrunedCount {
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-prune-count}
  */
-export async function getPruneCount(bot: Bot, guildId: BigString, options?: GetGuildPruneCountQuery): Promise<number> {
-  if (options?.days && options.days < 1) throw new Error(bot.constants.Errors.PRUNE_MIN_DAYS);
-  if (options?.days && options.days > 30) throw new Error(bot.constants.Errors.PRUNE_MAX_DAYS);
+export async function getPruneCount(
+  bot: LegacyBot,
+  guildId: BigString,
+  options?: GetGuildPruneCountQuery
+): Promise<number> {
+  if (options?.days && options.days < 1)
+    throw new Error(bot.constants.Errors.PRUNE_MIN_DAYS);
+  if (options?.days && options.days > 30)
+    throw new Error(bot.constants.Errors.PRUNE_MAX_DAYS);
 
   const result = await bot.rest.runMethod<DiscordPrunedCount>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_PRUNE(guildId),
+    bot.constants.routes.GUILD_PRUNE(guildId)
   );
 
   return result.pruned;

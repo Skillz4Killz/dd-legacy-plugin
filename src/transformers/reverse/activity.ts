@@ -1,9 +1,9 @@
-import { Bot } from "../../bot.js";
-import { DiscordActivity } from "../../types/discord.js";
+import { DiscordActivity } from "@discordeno/bot";
+import { LegacyBot } from "../../index.js";
 import { Activity } from "../activity.js";
 
 export function transformActivityToDiscordActivity(
-  bot: Bot,
+  bot: LegacyBot,
   payload: Activity
 ): DiscordActivity {
   return {
@@ -15,18 +15,14 @@ export function transformActivityToDiscordActivity(
       start: payload.startedAt,
       end: payload.endedAt,
     },
-    application_id: payload.applicationId
-      ? bot.utils.bigintToSnowflake(payload.applicationId)
-      : undefined,
+    application_id: payload.applicationId?.toString(),
     details: payload.details ?? undefined,
     state: payload.state ?? undefined,
     emoji: payload.emoji
       ? {
           name: payload.emoji.name,
           animated: payload.emoji.animated,
-          id: payload.emoji.id
-            ? bot.utils.bigintToSnowflake(payload.emoji.id)
-            : undefined,
+          id: payload.emoji.id?.toString()
         }
       : undefined,
     party: {

@@ -1,12 +1,12 @@
-import { Bot } from "../../bot.js";
+import { LegacyBot } from "../../index.js";
 import {
   DiscordGatewayPayload,
   DiscordGuildMembersChunk,
-} from "../../types/discord.js";
+} from "@discordeno/types";
 import { PresenceStatus } from "../../types/shared.js";
 
 export async function handleGuildMembersChunk(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   const payload = data.d as DiscordGuildMembersChunk;

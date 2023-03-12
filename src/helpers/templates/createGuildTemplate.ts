@@ -18,7 +18,11 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild-template#create-guild-template}
  */
-export async function createGuildTemplate(bot: Bot, guildId: BigString, options: CreateTemplate): Promise<Template> {
+export async function createGuildTemplate(
+  bot: LegacyBot,
+  guildId: BigString,
+  options: CreateTemplate
+): Promise<Template> {
   if (options.name.length < 1 || options.name.length > 100) {
     throw new Error("The name can only be in between 1-100 characters.");
   }
@@ -31,7 +35,7 @@ export async function createGuildTemplate(bot: Bot, guildId: BigString, options:
     bot.rest,
     "POST",
     bot.constants.routes.GUILD_TEMPLATES(guildId),
-    options,
+    options
   );
 
   return bot.transformers.template(bot, result);

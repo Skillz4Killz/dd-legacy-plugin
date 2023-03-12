@@ -18,9 +18,9 @@ import { DiscordGuild } from "../../types/discord.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template}
  */
 export async function createGuildFromTemplate(
-  bot: Bot,
+  bot: LegacyBot,
   templateCode: string,
-  options: CreateGuildFromTemplate,
+  options: CreateGuildFromTemplate
 ): Promise<Guild> {
   if (options.icon) {
     options.icon = await bot.utils.urlToBase64(options.icon);
@@ -30,12 +30,15 @@ export async function createGuildFromTemplate(
     bot.rest,
     "POST",
     bot.constants.routes.TEMPLATE(templateCode),
-    options,
+    options
   );
 
   return bot.transformers.guild(bot, {
     guild: createdGuild,
-    shardId: bot.utils.calculateShardId(bot.gateway, bot.transformers.snowflake(createdGuild.id)),
+    shardId: bot.utils.calculateShardId(
+      bot.gateway,
+      bot.transformers.snowflake(createdGuild.id)
+    ),
   });
 }
 

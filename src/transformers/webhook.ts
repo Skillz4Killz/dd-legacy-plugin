@@ -1,8 +1,8 @@
-import { Bot } from "../bot.js";
-import { DiscordWebhook } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordWebhook } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
-export function transformWebhook(bot: Bot, payload: DiscordWebhook) {
+export function transformWebhook(bot: LegacyBot, payload: DiscordWebhook) {
   const webhook = {
     id: bot.transformers.snowflake(payload.id),
     type: payload.type,
@@ -14,9 +14,7 @@ export function transformWebhook(bot: Bot, payload: DiscordWebhook) {
       : undefined,
     user: payload.user ? bot.transformers.user(bot, payload.user) : undefined,
     name: payload.name || "",
-    avatar: payload.avatar
-      ? bot.utils.iconHashToBigInt(payload.avatar)
-      : undefined,
+    avatar: payload.avatar ? iconHashToBigInt(payload.avatar) : undefined,
     token: payload.token,
     applicationId: payload.application_id
       ? bot.transformers.snowflake(payload.application_id)
@@ -26,7 +24,7 @@ export function transformWebhook(bot: Bot, payload: DiscordWebhook) {
           id: bot.transformers.snowflake(payload.source_guild.id!),
           name: payload.source_guild.name!,
           icon: payload.source_guild.icon
-            ? bot.utils.iconHashToBigInt(payload.source_guild.icon)
+            ? iconHashToBigInt(payload.source_guild.icon)
             : undefined,
         }
       : undefined,

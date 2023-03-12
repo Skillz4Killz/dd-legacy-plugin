@@ -9,7 +9,11 @@ import { BigString } from "../../../types/shared.ts";
  * @param options - The parameters for the building of the URL.
  * @returns The link to the resource.
  */
-export function getWidgetImageURL(bot: Bot, guildId: BigString, options?: GetGuildWidgetImageQuery): string {
+export function getWidgetImageURL(
+  bot: LegacyBot,
+  guildId: BigString,
+  options?: GetGuildWidgetImageQuery
+): string {
   return bot.constants.routes.GUILD_WIDGET_IMAGE(guildId, options?.style);
 }
 
@@ -24,10 +28,5 @@ export interface GetGuildWidgetImageQuery {
    * Banner3: Large image with guild icon, name and online count. In the footer, Discord logo on the left and "Chat Now" on the right
    * Banner4: Large Discord logo at the top of the widget. Guild icon, name and online count in the middle portion of the widget and a "JOIN MY SERVER" button at the bottom
    */
-  style?:
-    | "shield"
-    | "banner1"
-    | "banner2"
-    | "banner3"
-    | "banner4";
+  style?: "shield" | "banner1" | "banner2" | "banner3" | "banner4";
 }

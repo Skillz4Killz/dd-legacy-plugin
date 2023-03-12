@@ -1,6 +1,10 @@
 import type { Bot } from "../../../bot.ts";
 import { ApplicationCommand } from "../../../transformers/applicationCommand.ts";
-import { BigString, CreateApplicationCommand, DiscordApplicationCommand } from "../../../types/mod.ts";
+import {
+  BigString,
+  CreateApplicationCommand,
+  DiscordApplicationCommand,
+} from "../../../types/mod.ts";
 import { Collection } from "../../../util/collection.ts";
 
 /**
@@ -19,21 +23,23 @@ import { Collection } from "../../../util/collection.ts";
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands}
  */
 export async function upsertGuildApplicationCommands(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  commands: CreateApplicationCommand[],
+  commands: CreateApplicationCommand[]
 ): Promise<Collection<bigint, ApplicationCommand>> {
   const results = await bot.rest.runMethod<DiscordApplicationCommand[]>(
     bot.rest,
     "PUT",
     bot.constants.routes.COMMANDS_GUILD(bot.applicationId, guildId),
-    commands.map((command) => bot.transformers.reverse.createApplicationCommand(bot, command)),
+    commands.map((command) =>
+      bot.transformers.reverse.createApplicationCommand(bot, command)
+    )
   );
 
   return new Collection(
     results.map((result) => {
       const command = bot.transformers.applicationCommand(bot, result);
       return [command.id, command];
-    }),
+    })
   );
 }

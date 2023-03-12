@@ -6,7 +6,7 @@ import {
 
 /** Requires the MANAGE_GUILD permission. */
 export function handleAutoModerationRuleDelete(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload,
   shardId: number
 ) {

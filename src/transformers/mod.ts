@@ -1,4 +1,4 @@
-export * from "./toggles/mod.js";
+export * from "./toggles/index.js";
 export * from "./reverse/mod.js";
 
 export * from "./activity.js";

@@ -13,12 +13,21 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-member}
  */
-export async function getMember(bot: Bot, guildId: BigString, userId: BigString): Promise<Member> {
+export async function getMember(
+  bot: LegacyBot,
+  guildId: BigString,
+  userId: BigString
+): Promise<Member> {
   const result = await bot.rest.runMethod<DiscordMemberWithUser>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_MEMBER(guildId, userId),
+    bot.constants.routes.GUILD_MEMBER(guildId, userId)
   );
 
-  return bot.transformers.member(bot, result, bot.transformers.snowflake(guildId), bot.transformers.snowflake(userId));
+  return bot.transformers.member(
+    bot,
+    result,
+    bot.transformers.snowflake(guildId),
+    bot.transformers.snowflake(userId)
+  );
 }

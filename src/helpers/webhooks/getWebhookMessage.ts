@@ -20,16 +20,16 @@ export interface GetWebhookMessageOptions {
  * @see {@link https://discord.com/developers/docs/resources/webhook#get-webhook-message}
  */
 export async function getWebhookMessage(
-  bot: Bot,
+  bot: LegacyBot,
   webhookId: BigString,
   token: string,
   messageId: BigString,
-  options?: GetWebhookMessageOptions,
+  options?: GetWebhookMessageOptions
 ): Promise<Message> {
   const result = await bot.rest.runMethod<DiscordMessage>(
     bot.rest,
     "GET",
-    bot.constants.routes.WEBHOOK_MESSAGE(webhookId, token, messageId, options),
+    bot.constants.routes.WEBHOOK_MESSAGE(webhookId, token, messageId, options)
   );
 
   return bot.transformers.message(bot, result);

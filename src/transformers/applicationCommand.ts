@@ -1,9 +1,9 @@
-import { Bot } from "../bot.js";
-import { DiscordApplicationCommand } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordApplicationCommand } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 export function transformApplicationCommand(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordApplicationCommand
 ) {
   const applicationCommand = {

@@ -17,10 +17,10 @@ import { BigString, WithReason } from "../../mod.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild#create-guild-ban}
  */
 export async function banMember(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   userId: BigString,
-  options?: CreateGuildBan,
+  options?: CreateGuildBan
 ): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
@@ -29,7 +29,7 @@ export async function banMember(
     {
       delete_message_seconds: options?.deleteMessageSeconds,
       reason: options?.reason,
-    },
+    }
   );
 }
 

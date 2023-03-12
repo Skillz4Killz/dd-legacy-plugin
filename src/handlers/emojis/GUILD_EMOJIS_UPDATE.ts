@@ -2,11 +2,11 @@ import type { Bot } from "../../bot.js";
 import {
   DiscordGatewayPayload,
   DiscordGuildEmojisUpdate,
-} from "../../types/discord.js";
+} from "@discordeno/types";
 import { Collection } from "../../util/collection.js";
 
 export async function handleGuildEmojisUpdate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   const payload = data.d as DiscordGuildEmojisUpdate;

@@ -25,10 +25,10 @@ import {
  * @see {@link https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule}
  */
 export async function editAutomodRule(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   ruleId: BigString,
-  options: Partial<EditAutoModerationRuleOptions>,
+  options: Partial<EditAutoModerationRuleOptions>
 ): Promise<AutoModerationRule> {
   const result = await bot.rest.runMethod<DiscordAutoModerationRule>(
     bot.rest,
@@ -39,11 +39,11 @@ export async function editAutomodRule(
       event_type: options.eventType,
       trigger_metadata: options.triggerMetadata
         ? {
-          keyword_filter: options.triggerMetadata.keywordFilter,
-          presets: options.triggerMetadata.presets,
-          allow_list: options.triggerMetadata.allowList,
-          mention_total_limit: options.triggerMetadata.mentionTotalLimit,
-        }
+            keyword_filter: options.triggerMetadata.keywordFilter,
+            presets: options.triggerMetadata.presets,
+            allow_list: options.triggerMetadata.allowList,
+            mention_total_limit: options.triggerMetadata.mentionTotalLimit,
+          }
         : undefined,
       actions: options.actions?.map((action) => ({
         type: action.type,
@@ -56,7 +56,7 @@ export async function editAutomodRule(
       exempt_roles: options.exemptRoles?.map((id) => id.toString()),
       exempt_channels: options.exemptChannels?.map((id) => id.toString()),
       reason: options.reason,
-    },
+    }
   );
 
   return bot.transformers.automodRule(bot, result);

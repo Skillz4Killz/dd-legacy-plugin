@@ -19,11 +19,16 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/channel#pin-message}
  */
-export async function pinMessage(bot: Bot, channelId: BigString, messageId: BigString, reason?: string): Promise<void> {
+export async function pinMessage(
+  bot: LegacyBot,
+  channelId: BigString,
+  messageId: BigString,
+  reason?: string
+): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "PUT",
     bot.constants.routes.CHANNEL_PIN(channelId, messageId),
-    reason ? { reason } : undefined,
+    reason ? { reason } : undefined
   );
 }

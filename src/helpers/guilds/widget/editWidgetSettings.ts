@@ -20,10 +20,10 @@ import { BigString } from "../../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild#modify-guild-widget}
  */
 export async function editWidgetSettings(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   enabled: boolean,
-  channelId?: string | null,
+  channelId?: string | null
 ): Promise<GuildWidgetSettings> {
   const result = await bot.rest.runMethod<DiscordGuildWidgetSettings>(
     bot.rest,
@@ -32,7 +32,7 @@ export async function editWidgetSettings(
     {
       enabled,
       channel_id: channelId,
-    },
+    }
   );
 
   return bot.transformers.widgetSettings(bot, result);

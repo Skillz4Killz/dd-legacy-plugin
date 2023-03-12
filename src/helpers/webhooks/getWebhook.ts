@@ -15,11 +15,14 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/webhook#get-webhook}
  */
-export async function getWebhook(bot: Bot, webhookId: BigString): Promise<Webhook> {
+export async function getWebhook(
+  bot: LegacyBot,
+  webhookId: BigString
+): Promise<Webhook> {
   const result = await bot.rest.runMethod<DiscordWebhook>(
     bot.rest,
     "GET",
-    bot.constants.routes.WEBHOOK_ID(webhookId),
+    bot.constants.routes.WEBHOOK_ID(webhookId)
   );
 
   return bot.transformers.webhook(bot, result);

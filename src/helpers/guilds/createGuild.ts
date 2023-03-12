@@ -24,20 +24,28 @@ import {
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#create-guild}
  */
-export async function createGuild(bot: Bot, options: CreateGuild): Promise<Guild> {
-  const result = await bot.rest.runMethod<DiscordGuild>(bot.rest, "POST", bot.constants.routes.GUILDS(), {
-    name: options.name,
-    afk_channel_id: options.afkChannelId,
-    afk_timeout: options.afkTimeout,
-    channels: options.channels,
-    default_message_notifications: options.defaultMessageNotifications,
-    explicit_content_filter: options.explicitContentFilter,
-    icon: options.icon,
-    roles: options.roles,
-    system_channel_flags: options.systemChannelFlags,
-    system_channel_id: options.systemChannelId,
-    verification_level: options.verificationLevel,
-  });
+export async function createGuild(
+  bot: LegacyBot,
+  options: CreateGuild
+): Promise<Guild> {
+  const result = await bot.rest.runMethod<DiscordGuild>(
+    bot.rest,
+    "POST",
+    bot.constants.routes.GUILDS(),
+    {
+      name: options.name,
+      afk_channel_id: options.afkChannelId,
+      afk_timeout: options.afkTimeout,
+      channels: options.channels,
+      default_message_notifications: options.defaultMessageNotifications,
+      explicit_content_filter: options.explicitContentFilter,
+      icon: options.icon,
+      roles: options.roles,
+      system_channel_flags: options.systemChannelFlags,
+      system_channel_id: options.systemChannelId,
+      verification_level: options.verificationLevel,
+    }
+  );
 
   return bot.transformers.guild(bot, { guild: result, shardId: 0 });
 }

@@ -20,11 +20,11 @@ import { BigString, InteractionResponseTypes } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/webhook#edit-webhook-message}
  */
 export async function editWebhookMessage(
-  bot: Bot,
+  bot: LegacyBot,
   webhookId: BigString,
   token: string,
   messageId: BigString,
-  options: InteractionCallbackData & { threadId?: BigString },
+  options: InteractionCallbackData & { threadId?: BigString }
 ): Promise<Message> {
   const result = await bot.rest.runMethod<DiscordMessage>(
     bot.rest,
@@ -36,7 +36,7 @@ export async function editWebhookMessage(
         data: options,
       }).data,
       file: options.file,
-    },
+    }
   );
 
   return bot.transformers.message(bot, result);

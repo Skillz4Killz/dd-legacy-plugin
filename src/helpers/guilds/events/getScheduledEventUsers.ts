@@ -24,26 +24,30 @@ import { Collection } from "../../../util/collection.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users}
  */
 export async function getScheduledEventUsers(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   eventId: BigString,
-  options?: GetScheduledEventUsers & { withMember?: false },
+  options?: GetScheduledEventUsers & { withMember?: false }
 ): Promise<Collection<bigint, User>>;
 export async function getScheduledEventUsers(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   eventId: BigString,
-  options?: GetScheduledEventUsers & { withMember: true },
+  options?: GetScheduledEventUsers & { withMember: true }
 ): Promise<Collection<bigint, { user: User; member: Member }>>;
 export async function getScheduledEventUsers(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   eventId: BigString,
-  options?: GetScheduledEventUsers,
+  options?: GetScheduledEventUsers
 ): Promise<
   Collection<bigint, User> | Collection<bigint, { user: User; member: Member }>
 > {
-  let url = bot.constants.routes.GUILD_SCHEDULED_EVENT_USERS(guildId, eventId, options);
+  let url = bot.constants.routes.GUILD_SCHEDULED_EVENT_USERS(
+    guildId,
+    eventId,
+    options
+  );
 
   if (options) {
     url = "?";
@@ -54,18 +58,16 @@ export async function getScheduledEventUsers(
     if (options.before) url += `&before=${options.before}`;
   }
 
-  const results = await bot.rest.runMethod<{ user: DiscordUser; member?: DiscordMember }[]>(
-    bot.rest,
-    "GET",
-    url,
-  );
+  const results = await bot.rest.runMethod<
+    { user: DiscordUser; member?: DiscordMember }[]
+  >(bot.rest, "GET", url);
 
   if (!options?.withMember) {
     return new Collection(
       results.map((result) => {
         const user = bot.transformers.user(bot, result.user);
         return [user.id, user];
-      }),
+      })
     );
   }
 
@@ -77,7 +79,7 @@ export async function getScheduledEventUsers(
       const member = bot.transformers.member(bot, result.member!, id, user.id);
 
       return [user.id, { member, user }];
-    }),
+    })
   );
 }
 

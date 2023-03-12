@@ -8,7 +8,7 @@ export type LegacyBot<B = Bot> = B & {
 };
 
 export function enableLegacyPlugin<B extends Bot>(
-  bot: Bot,
+  bot: LegacyBot,
   options?: {
     customTransformers: Partial<Transformers>;
     customHandlers?: Partial<ReturnType<typeof createBotGatewayHandlers>>;

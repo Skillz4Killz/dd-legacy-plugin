@@ -1,9 +1,9 @@
-import { Bot } from "../bot.js";
-import { DiscordAutoModerationActionExecution } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordAutoModerationActionExecution } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 export function transformAutoModerationActionExecution(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordAutoModerationActionExecution
 ) {
   const rule = {

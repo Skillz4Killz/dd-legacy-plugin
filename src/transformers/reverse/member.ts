@@ -1,9 +1,9 @@
 import type { Bot } from "../../bot.js";
-import { DiscordMember, DiscordUser } from "../../types/discord.js";
+import { DiscordMember, DiscordUser } from "@discordeno/types";
 import { Member, User } from "../member.js";
 
 export function transformUserToDiscordUser(
-  bot: Bot,
+  bot: LegacyBot,
   payload: User
 ): DiscordUser {
   return {
@@ -24,7 +24,7 @@ export function transformUserToDiscordUser(
 }
 
 export function transformMemberToDiscordMember(
-  bot: Bot,
+  bot: LegacyBot,
   payload: Member
 ): DiscordMember {
   return {

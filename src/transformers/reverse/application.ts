@@ -1,9 +1,9 @@
-import { Bot } from "../../bot.js";
-import { DiscordApplication } from "../../types/discord.js";
+import { DiscordApplication, iconBigintToHash } from "@discordeno/bot";
+import { LegacyBot } from "../../index.js";
 import { Application } from "../application.js";
 
 export function transformApplicationToDiscordApplication(
-  bot: Bot,
+  bot: LegacyBot,
   payload: Application
 ): DiscordApplication {
   return {
@@ -18,20 +18,18 @@ export function transformApplicationToDiscordApplication(
     primary_sku_id: payload.primarySkuId,
     slug: payload.slug,
     cover_image: payload.coverImage
-      ? bot.utils.iconBigintToHash(payload.coverImage)
+      ? iconBigintToHash(payload.coverImage)
       : undefined,
     flags: payload.flags,
 
-    id: bot.utils.bigintToSnowflake(payload.id),
-    icon: payload.icon ? bot.utils.iconBigintToHash(payload.icon) : null,
+    id: payload.id.toString(),
+    icon: payload.icon ? iconBigintToHash(payload.icon) : null,
     owner: payload.owner
       ? bot.transformers.reverse.user(bot, payload.owner)
       : undefined,
     team: payload.team
       ? bot.transformers.reverse.team(bot, payload.team)
       : null,
-    guild_id: payload.guildId
-      ? bot.utils.bigintToSnowflake(payload.guildId)
-      : undefined,
+    guild_id: payload.guildId?.toString(),
   };
 }

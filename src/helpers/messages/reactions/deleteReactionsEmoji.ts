@@ -20,16 +20,20 @@ import { processReactionString } from "./getReactions.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji}
  */
 export async function deleteReactionsEmoji(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   messageId: BigString,
-  reaction: string,
+  reaction: string
 ): Promise<void> {
   reaction = processReactionString(reaction);
 
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
-    bot.constants.routes.CHANNEL_MESSAGE_REACTION(channelId, messageId, reaction),
+    bot.constants.routes.CHANNEL_MESSAGE_REACTION(
+      channelId,
+      messageId,
+      reaction
+    )
   );
 }

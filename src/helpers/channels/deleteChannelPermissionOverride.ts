@@ -16,15 +16,15 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#delete-channel-permission}
  */
 export async function deleteChannelPermissionOverride(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   overwriteId: BigString,
-  reason?: string,
+  reason?: string
 ): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
     bot.constants.routes.CHANNEL_OVERWRITE(channelId, overwriteId),
-    reason ? { reason } : undefined,
+    reason ? { reason } : undefined
   );
 }

@@ -1,10 +1,10 @@
-import { Bot } from "../bot.js";
-import { DiscordMessage } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordMessage } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 import { CHANNEL_MENTION_REGEX } from "../util/constants.js";
 import { MemberToggles } from "./toggles/member.js";
 
-export function transformMessage(bot: Bot, payload: DiscordMessage) {
+export function transformMessage(bot: LegacyBot, payload: DiscordMessage) {
   const guildId = payload.guild_id
     ? bot.transformers.snowflake(payload.guild_id)
     : undefined;
@@ -63,9 +63,7 @@ export function transformMessage(bot: Bot, payload: DiscordMessage) {
                   : undefined,
                 toggles: new MemberToggles(payload.interaction.member),
                 avatar: payload.interaction.member.avatar
-                  ? bot.utils.iconHashToBigInt(
-                      payload.interaction.member.avatar
-                    )
+                  ? iconHashToBigInt(payload.interaction.member.avatar)
                   : undefined,
                 permissions: payload.interaction.member.permissions
                   ? bot.transformers.snowflake(

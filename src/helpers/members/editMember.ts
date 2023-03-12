@@ -20,10 +20,10 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild#modify-guild-member}
  */
 export async function editMember(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   userId: BigString,
-  options: ModifyGuildMember,
+  options: ModifyGuildMember
 ): Promise<Member> {
   const result = await bot.rest.runMethod<DiscordMemberWithUser>(
     bot.rest,
@@ -38,10 +38,15 @@ export async function editMember(
       communication_disabled_until: options.communicationDisabledUntil
         ? new Date(options.communicationDisabledUntil).toISOString()
         : options.communicationDisabledUntil,
-    },
+    }
   );
 
-  return bot.transformers.member(bot, result, bot.transformers.snowflake(guildId), bot.transformers.snowflake(userId));
+  return bot.transformers.member(
+    bot,
+    result,
+    bot.transformers.snowflake(guildId),
+    bot.transformers.snowflake(userId)
+  );
 }
 
 /** https://discord.com/developers/docs/resources/guild#modify-guild-member */

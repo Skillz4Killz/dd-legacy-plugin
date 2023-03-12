@@ -14,6 +14,13 @@ import { BigString } from "../../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/channel#join-thread}
  */
-export async function joinThread(bot: Bot, channelId: BigString): Promise<void> {
-  return await bot.rest.runMethod<void>(bot.rest, "PUT", bot.constants.routes.THREAD_ME(channelId));
+export async function joinThread(
+  bot: LegacyBot,
+  channelId: BigString
+): Promise<void> {
+  return await bot.rest.runMethod<void>(
+    bot.rest,
+    "PUT",
+    bot.constants.routes.THREAD_ME(channelId)
+  );
 }

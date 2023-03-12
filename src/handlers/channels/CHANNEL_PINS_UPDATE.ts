@@ -2,10 +2,10 @@ import type { Bot } from "../../bot.js";
 import {
   DiscordChannelPinsUpdate,
   DiscordGatewayPayload,
-} from "../../types/discord.js";
+} from "@discordeno/types";
 
 export async function handleChannelPinsUpdate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   const payload = data.d as DiscordChannelPinsUpdate;

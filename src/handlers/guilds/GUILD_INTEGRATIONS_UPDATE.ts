@@ -2,10 +2,10 @@ import type { Bot } from "../../bot.js";
 import {
   DiscordGatewayPayload,
   DiscordGuildIntegrationsUpdate,
-} from "../../types/discord.js";
+} from "@discordeno/types";
 
 export async function handleGuildIntegrationsUpdate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   const payload = data.d as DiscordGuildIntegrationsUpdate;

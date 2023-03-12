@@ -1,11 +1,11 @@
-import { Bot } from "../../bot.js";
-import { DiscordComponent } from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordActionRow } from "@discordeno/types";
 import { Component } from "../component.js";
 
 export function transformComponentToDiscordComponent(
-  bot: Bot,
+  bot: LegacyBot,
   payload: Component
-): DiscordComponent {
+): DiscordActionRow {
   return {
     type: payload.type,
     custom_id: payload.customId,

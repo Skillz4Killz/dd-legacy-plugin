@@ -17,11 +17,15 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild-template#get-guild-templates}
  */
-export async function syncGuildTemplate(bot: Bot, guildId: BigString, templateCode: string): Promise<Template> {
+export async function syncGuildTemplate(
+  bot: LegacyBot,
+  guildId: BigString,
+  templateCode: string
+): Promise<Template> {
   const result = await bot.rest.runMethod<DiscordTemplate>(
     bot.rest,
     "PUT",
-    bot.constants.routes.GUILD_TEMPLATE(guildId, templateCode),
+    bot.constants.routes.GUILD_TEMPLATE(guildId, templateCode)
   );
 
   return bot.transformers.template(bot, result);

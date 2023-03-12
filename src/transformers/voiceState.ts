@@ -1,10 +1,10 @@
-import { Bot } from "../bot.js";
-import { DiscordVoiceState } from "../types/discord.js";
+import { LegacyBot } from "../index.js";
+import { DiscordVoiceState } from "@discordeno/types";
 import { VoiceStateToggles } from "./toggles/voice.js";
-import { Optionalize } from "../types/shared.js";
+import { Optionalize } from "../optionalize.js";
 
 export function transformVoiceState(
-  bot: Bot,
+  bot: LegacyBot,
   payload: { voiceState: DiscordVoiceState } & { guildId: bigint }
 ) {
   const voiceState = {

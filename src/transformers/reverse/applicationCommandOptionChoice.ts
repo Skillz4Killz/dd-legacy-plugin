@@ -1,9 +1,9 @@
-import { Bot } from "../../bot.js";
-import { DiscordApplicationCommandOptionChoice } from "../../types/discord.js";
+import { DiscordApplicationCommandOptionChoice } from "@discordeno/bot";
+import { LegacyBot } from "../../index.js";
 import { ApplicationCommandOptionChoice } from "../applicationCommandOptionChoice.js";
 
 export function transformApplicationCommandOptionChoiceToDiscordApplicationCommandOptionChoice(
-  bot: Bot,
+  bot: LegacyBot,
   payload: ApplicationCommandOptionChoice
 ): DiscordApplicationCommandOptionChoice {
   return {

@@ -13,17 +13,20 @@ import { DiscordSticker } from "../../types/discord.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/sticker#list-guild-stickers}
  */
-export async function getGuildStickers(bot: Bot, guildId: bigint): Promise<Collection<bigint, Sticker>> {
+export async function getGuildStickers(
+  bot: LegacyBot,
+  guildId: bigint
+): Promise<Collection<bigint, Sticker>> {
   const results = await bot.rest.runMethod<DiscordSticker[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_STICKERS(guildId),
+    bot.constants.routes.GUILD_STICKERS(guildId)
   );
 
   return new Collection(
     results.map((result) => {
       const pack = bot.transformers.sticker(bot, result);
       return [pack.id, pack];
-    }),
+    })
   );
 }

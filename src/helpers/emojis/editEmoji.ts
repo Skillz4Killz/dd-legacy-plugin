@@ -20,10 +20,10 @@ import { DiscordEmoji } from "../../types/discord.ts";
  * @see {@link https://discord.com/developers/docs/resources/emoji#modify-guild-emoji}
  */
 export async function editEmoji(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   id: BigString,
-  options: ModifyGuildEmoji,
+  options: ModifyGuildEmoji
 ): Promise<Emoji> {
   const result = await bot.rest.runMethod<DiscordEmoji>(
     bot.rest,
@@ -32,9 +32,11 @@ export async function editEmoji(
     {
       name: options.name,
       // NEED TERNARY TO SUPPORT NULL AS VALID
-      roles: options.roles ? options.roles.map((role) => role.toString()) : options.roles,
+      roles: options.roles
+        ? options.roles.map((role) => role.toString())
+        : options.roles,
       reason: options.reason,
-    },
+    }
   );
 
   return bot.transformers.emoji(bot, result);

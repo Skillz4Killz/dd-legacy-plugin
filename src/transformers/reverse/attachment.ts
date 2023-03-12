@@ -1,9 +1,9 @@
-import { Bot } from "../../bot.js";
-import { DiscordAttachment } from "../../types/discord.js";
+import { DiscordAttachment } from "@discordeno/bot";
+import { LegacyBot } from "../../index.js";
 import { Attachment } from "../attachment.js";
 
 export function transformAttachmentToDiscordAttachment(
-  bot: Bot,
+  bot: LegacyBot,
   payload: Attachment
 ): DiscordAttachment {
   return {

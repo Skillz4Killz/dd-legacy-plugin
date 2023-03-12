@@ -13,22 +13,24 @@ import { ImageFormat, ImageSize } from "../members/getAvatarUrl.ts";
  * @returns The link to the resource or `undefined` if no banner has been set.
  */
 export function getGuildBannerURL(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   options: {
     banner?: string | bigint;
     size?: ImageSize;
     format?: ImageFormat;
-  },
+  }
 ): string | undefined {
   return options.banner
     ? bot.utils.formatImageURL(
-      bot.constants.routes.GUILD_BANNER(
-        guildId,
-        typeof options.banner === "string" ? options.banner : bot.utils.iconBigintToHash(options.banner),
-      ),
-      options.size || 128,
-      options.format,
-    )
+        bot.constants.routes.GUILD_BANNER(
+          guildId,
+          typeof options.banner === "string"
+            ? options.banner
+            : bot.utils.iconBigintToHash(options.banner)
+        ),
+        options.size || 128,
+        options.format
+      )
     : undefined;
 }

@@ -21,14 +21,23 @@ export const updateBotVoiceState = editOwnVoiceState;
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state}
  */
-export async function editOwnVoiceState(bot: Bot, guildId: BigString, options: EditOwnVoiceState): Promise<void> {
-  return await bot.rest.runMethod<void>(bot.rest, "PATCH", bot.constants.routes.UPDATE_VOICE_STATE(guildId), {
-    channel_id: options.channelId,
-    suppress: options.suppress,
-    request_to_speak_timestamp: options.requestToSpeakTimestamp
-      ? new Date(options.requestToSpeakTimestamp).toISOString()
-      : options.requestToSpeakTimestamp,
-  });
+export async function editOwnVoiceState(
+  bot: LegacyBot,
+  guildId: BigString,
+  options: EditOwnVoiceState
+): Promise<void> {
+  return await bot.rest.runMethod<void>(
+    bot.rest,
+    "PATCH",
+    bot.constants.routes.UPDATE_VOICE_STATE(guildId),
+    {
+      channel_id: options.channelId,
+      suppress: options.suppress,
+      request_to_speak_timestamp: options.requestToSpeakTimestamp
+        ? new Date(options.requestToSpeakTimestamp).toISOString()
+        : options.requestToSpeakTimestamp,
+    }
+  );
 }
 
 // TODO: Make the `userId` property of `options` its own parameter.
@@ -47,7 +56,11 @@ export async function editOwnVoiceState(bot: Bot, guildId: BigString, options: E
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state}
  */
-export async function editUserVoiceState(bot: Bot, guildId: BigString, options: EditUserVoiceState): Promise<void> {
+export async function editUserVoiceState(
+  bot: LegacyBot,
+  guildId: BigString,
+  options: EditUserVoiceState
+): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "PATCH",
@@ -56,7 +69,7 @@ export async function editUserVoiceState(bot: Bot, guildId: BigString, options: 
       channel_id: options.channelId,
       suppress: options.suppress,
       user_id: options.userId,
-    },
+    }
   );
 }
 

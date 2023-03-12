@@ -23,10 +23,10 @@ import { BigString, InteractionResponseTypes } from "../../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#edit-followup-message}
  */
 export async function editFollowupMessage(
-  bot: Bot,
+  bot: LegacyBot,
   token: string,
   messageId: BigString,
-  options: InteractionCallbackData,
+  options: InteractionCallbackData
 ): Promise<Message> {
   const result = await bot.rest.runMethod<DiscordMessage>(
     bot.rest,
@@ -39,7 +39,7 @@ export async function editFollowupMessage(
         data: options,
       }).data,
       file: options.file,
-    },
+    }
   );
 
   return bot.transformers.message(bot, result);

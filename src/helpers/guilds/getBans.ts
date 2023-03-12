@@ -19,11 +19,15 @@ import { Ban } from "./getBan.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-bans}
  */
-export async function getBans(bot: Bot, guildId: BigString, options?: GetBans): Promise<Collection<bigint, Ban>> {
+export async function getBans(
+  bot: LegacyBot,
+  guildId: BigString,
+  options?: GetBans
+): Promise<Collection<bigint, Ban>> {
   const results = await bot.rest.runMethod<DiscordBan[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_BANS(guildId, options),
+    bot.constants.routes.GUILD_BANS(guildId, options)
   );
 
   return new Collection(
@@ -36,7 +40,7 @@ export async function getBans(bot: Bot, guildId: BigString, options?: GetBans): 
           user: user,
         },
       ];
-    }),
+    })
   );
 }
 

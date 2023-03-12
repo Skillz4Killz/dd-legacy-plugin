@@ -22,10 +22,13 @@ export type VanityUrl = {
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-vanity-url}
  */
-export async function getVanityUrl(bot: Bot, guildId: BigString): Promise<VanityUrl> {
+export async function getVanityUrl(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<VanityUrl> {
   return await bot.rest.runMethod<VanityUrl>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_VANITY_URL(guildId),
+    bot.constants.routes.GUILD_VANITY_URL(guildId)
   );
 }

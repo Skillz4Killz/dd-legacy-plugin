@@ -1,8 +1,8 @@
-import { Bot } from "../bot.js";
-import { DiscordInviteCreate } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordInviteCreate } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
-export function transformInvite(bot: Bot, invite: DiscordInviteCreate) {
+export function transformInvite(bot: LegacyBot, invite: DiscordInviteCreate) {
   const transformedInvite = {
     /** The channel the invite is for */
     channelId: bot.transformers.snowflake(invite.channel_id),

@@ -1,9 +1,9 @@
-import { Bot } from "../../bot.js";
-import { DiscordEmbed } from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordEmbed } from "@discordeno/types";
 import { Embed } from "../embed.js";
 
 export function transformEmbedToDiscordEmbed(
-  bot: Bot,
+  bot: LegacyBot,
   payload: Embed
 ): DiscordEmbed {
   return {

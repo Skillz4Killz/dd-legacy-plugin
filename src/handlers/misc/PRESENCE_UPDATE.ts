@@ -1,11 +1,11 @@
-import { Bot } from "../../bot.js";
+import { LegacyBot } from "../../index.js";
 import {
   DiscordGatewayPayload,
   DiscordPresenceUpdate,
-} from "../../types/discord.js";
+} from "@discordeno/types";
 
 export async function handlePresenceUpdate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   bot.events.presenceUpdate(

@@ -24,9 +24,9 @@ import { DiscordMessage } from "../../../types/discord.ts";
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message}
  */
 export async function sendFollowupMessage(
-  bot: Bot,
+  bot: LegacyBot,
   token: string,
-  options: InteractionResponse,
+  options: InteractionResponse
 ): Promise<Message> {
   const result = await bot.rest.sendRequest<DiscordMessage>(bot.rest, {
     url: bot.constants.routes.WEBHOOK(bot.applicationId, token),

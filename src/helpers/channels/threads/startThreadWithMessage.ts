@@ -24,10 +24,10 @@ import { DiscordChannel } from "../../../types/discord.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#start-thread-from-message}
  */
 export async function startThreadWithMessage(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   messageId: BigString,
-  options: StartThreadWithMessage,
+  options: StartThreadWithMessage
 ): Promise<Channel> {
   const result = await bot.rest.runMethod<DiscordChannel>(
     bot.rest,
@@ -38,10 +38,13 @@ export async function startThreadWithMessage(
       auto_archive_duration: options.autoArchiveDuration,
       rate_limit_per_user: options.rateLimitPerUser,
       reason: options.reason,
-    },
+    }
   );
 
-  return bot.transformers.channel(bot, { channel: result, guildId: bot.transformers.snowflake(result.guild_id!) });
+  return bot.transformers.channel(bot, {
+    channel: result,
+    guildId: bot.transformers.snowflake(result.guild_id!),
+  });
 }
 
 export interface StartThreadWithMessage extends WithReason {

@@ -3,7 +3,12 @@ import { WithReason } from "../../mod.ts";
 import { Channel } from "../../transformers/channel.ts";
 import { DiscordChannel } from "../../types/discord.ts";
 import { OverwriteReadable } from "../../types/discordeno.ts";
-import { BigString, ChannelTypes, SortOrderTypes, VideoQualityModes } from "../../types/shared.ts";
+import {
+  BigString,
+  ChannelTypes,
+  SortOrderTypes,
+  VideoQualityModes,
+} from "../../types/shared.ts";
 
 /**
  * Edits a channel's settings.
@@ -35,7 +40,11 @@ import { BigString, ChannelTypes, SortOrderTypes, VideoQualityModes } from "../.
  * - Otherwise:
  *     - Fires a _Channel Update_ gateway event.
  */
-export async function editChannel(bot: Bot, channelId: BigString, options: ModifyChannel): Promise<Channel> {
+export async function editChannel(
+  bot: LegacyBot,
+  channelId: BigString,
+  options: ModifyChannel
+): Promise<Channel> {
   if (options.name || options.topic) {
     const request = editChannelNameTopicQueue.get(channelId);
     if (!request) {
@@ -73,7 +82,8 @@ export async function editChannel(bot: Bot, channelId: BigString, options: Modif
       user_limit: options.userLimit,
       rate_limit_per_user: options.rateLimitPerUser,
       position: options.position,
-      parent_id: options.parentId === null ? null : options.parentId?.toString(),
+      parent_id:
+        options.parentId === null ? null : options.parentId?.toString(),
       nsfw: options.nsfw,
       type: options.type,
       archived: options.archived,
@@ -82,34 +92,39 @@ export async function editChannel(bot: Bot, channelId: BigString, options: Modif
       invitable: options.invitable,
       permission_overwrites: options.permissionOverwrites
         ? options.permissionOverwrites?.map((overwrite) => ({
-          id: overwrite.id.toString(),
-          type: overwrite.type,
-          allow: overwrite.allow ? bot.utils.calculateBits(overwrite.allow) : null,
-          deny: overwrite.deny ? bot.utils.calculateBits(overwrite.deny) : null,
-        }))
+            id: overwrite.id.toString(),
+            type: overwrite.type,
+            allow: overwrite.allow ? calculateBits(overwrite.allow) : null,
+            deny: overwrite.deny ? calculateBits(overwrite.deny) : null,
+          }))
         : undefined,
       available_tags: options.availableTags
         ? options.availableTags.map((availableTag) => ({
-          id: availableTag.id,
-          name: availableTag.name,
-          moderated: availableTag.moderated,
-          emoji_id: availableTag.emojiId,
-          emoji_name: availableTag.emojiName,
-        }))
+            id: availableTag.id,
+            name: availableTag.name,
+            moderated: availableTag.moderated,
+            emoji_id: availableTag.emojiId,
+            emoji_name: availableTag.emojiName,
+          }))
         : undefined,
-      applied_tags: options.appliedTags?.map((appliedTag) => appliedTag.toString()),
+      applied_tags: options.appliedTags?.map((appliedTag) =>
+        appliedTag.toString()
+      ),
       default_reaction_emoji: options.defaultReactionEmoji
         ? {
-          emoji_id: options.defaultReactionEmoji.emojiId,
-          emoji_name: options.defaultReactionEmoji.emojiName,
-        }
+            emoji_id: options.defaultReactionEmoji.emojiId,
+            emoji_name: options.defaultReactionEmoji.emojiName,
+          }
         : undefined,
       default_sort_order: options.defaultSortOrder,
       reason: options.reason,
-    },
+    }
   );
 
-  return bot.transformers.channel(bot, { channel: result, guildId: bot.transformers.snowflake(result.guild_id!) });
+  return bot.transformers.channel(bot, {
+    channel: result,
+    guildId: bot.transformers.snowflake(result.guild_id!),
+  });
 }
 
 interface EditChannelRequest {

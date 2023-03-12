@@ -14,11 +14,14 @@ import { DiscordTemplate } from "../../types/discord.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild-template#get-guild-template}
  */
-export async function getGuildTemplate(bot: Bot, templateCode: string): Promise<Template> {
+export async function getGuildTemplate(
+  bot: LegacyBot,
+  templateCode: string
+): Promise<Template> {
   const result = await bot.rest.runMethod<DiscordTemplate>(
     bot.rest,
     "GET",
-    bot.constants.routes.TEMPLATE(templateCode),
+    bot.constants.routes.TEMPLATE(templateCode)
   );
 
   return bot.transformers.template(bot, result);

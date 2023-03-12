@@ -1,17 +1,15 @@
 import type { Bot } from "../bot.js";
-import { DiscordMember, DiscordUser } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { DiscordMember, DiscordUser } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 import { MemberToggles } from "./toggles/member.js";
 import { UserToggles } from "./toggles/user.js";
 
-export function transformUser(bot: Bot, payload: DiscordUser) {
+export function transformUser(bot: LegacyBot, payload: DiscordUser) {
   const user = {
     id: bot.transformers.snowflake(payload.id || ""),
     username: payload.username,
     discriminator: payload.discriminator,
-    avatar: payload.avatar
-      ? bot.utils.iconHashToBigInt(payload.avatar)
-      : undefined,
+    avatar: payload.avatar ? iconHashToBigInt(payload.avatar) : undefined,
     locale: payload.locale,
     email: payload.email ?? undefined,
     flags: payload.flags,
@@ -24,7 +22,7 @@ export function transformUser(bot: Bot, payload: DiscordUser) {
 }
 
 export function transformMember(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordMember,
   guildId: bigint,
   userId: bigint
@@ -39,9 +37,7 @@ export function transformMember(
     premiumSince: payload.premium_since
       ? Date.parse(payload.premium_since)
       : undefined,
-    avatar: payload.avatar
-      ? bot.utils.iconHashToBigInt(payload.avatar)
-      : undefined,
+    avatar: payload.avatar ? iconHashToBigInt(payload.avatar) : undefined,
     permissions: payload.permissions
       ? bot.transformers.snowflake(payload.permissions)
       : undefined,

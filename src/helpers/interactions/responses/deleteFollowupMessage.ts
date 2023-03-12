@@ -15,10 +15,18 @@ import { BigString } from "../../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message}
  */
-export async function deleteFollowupMessage(bot: Bot, token: string, messageId: BigString): Promise<void> {
+export async function deleteFollowupMessage(
+  bot: LegacyBot,
+  token: string,
+  messageId: BigString
+): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
-    bot.constants.routes.INTERACTION_ID_TOKEN_MESSAGE_ID(bot.applicationId, token, messageId),
+    bot.constants.routes.INTERACTION_ID_TOKEN_MESSAGE_ID(
+      bot.applicationId,
+      token,
+      messageId
+    )
   );
 }

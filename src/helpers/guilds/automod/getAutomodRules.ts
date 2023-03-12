@@ -16,17 +16,20 @@ import { Collection } from "../../../util/collection.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/auto-moderation#list-auto-moderation-rules-for-guild}
  */
-export async function getAutomodRules(bot: Bot, guildId: BigString): Promise<Collection<bigint, AutoModerationRule>> {
+export async function getAutomodRules(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<Collection<bigint, AutoModerationRule>> {
   const results = await bot.rest.runMethod<DiscordAutoModerationRule[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.AUTOMOD_RULES(guildId),
+    bot.constants.routes.AUTOMOD_RULES(guildId)
   );
 
   return new Collection(
     results.map((result) => {
       const rule = bot.transformers.automodRule(bot, result);
       return [rule.id, rule];
-    }),
+    })
   );
 }

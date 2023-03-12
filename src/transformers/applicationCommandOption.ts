@@ -1,18 +1,18 @@
-import { Bot } from "../bot.js";
+import { LegacyBot } from "../index.js";
 import {
   DiscordApplicationCommandOption,
   DiscordApplicationCommandOptionChoice,
-} from "../types/discord.js";
+} from "@discordeno/types";
 import {
   ApplicationCommandOptionTypes,
   ChannelTypes,
   Localization,
 } from "../types/shared.js";
-import { Optionalize } from "../types/shared.js";
+import { Optionalize } from "../optionalize.js";
 import { ApplicationCommandOptionChoice } from "./applicationCommandOptionChoice.js";
 
 export function transformApplicationCommandOption(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordApplicationCommandOption
 ): ApplicationCommandOption {
   return {

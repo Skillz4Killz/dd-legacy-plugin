@@ -1,9 +1,9 @@
-import { Bot } from "../bot.js";
-import { DiscordEmoji } from "../types/discord.js";
+import { LegacyBot } from "../index.js";
+import { DiscordEmoji } from "@discordeno/types";
 import { EmojiToggles } from "./toggles/emoji.js";
-import { Optionalize } from "../types/shared.js";
+import { Optionalize } from "../optionalize.js";
 
-export function transformEmoji(bot: Bot, payload: DiscordEmoji) {
+export function transformEmoji(bot: LegacyBot, payload: DiscordEmoji) {
   const emoji = {
     id: payload.id ? bot.transformers.snowflake(payload.id) : undefined,
     name: payload.name || undefined,

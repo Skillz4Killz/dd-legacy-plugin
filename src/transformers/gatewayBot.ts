@@ -1,5 +1,5 @@
-import { DiscordGetGatewayBot } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { DiscordGetGatewayBot } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 export function transformGatewayBot(payload: DiscordGetGatewayBot) {
   const gatewayBot = {

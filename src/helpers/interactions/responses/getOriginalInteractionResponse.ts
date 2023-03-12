@@ -18,11 +18,14 @@ import { DiscordMessage } from "../../../types/discord.ts";
  *
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response}
  */
-export async function getOriginalInteractionResponse(bot: Bot, token: string): Promise<Message> {
+export async function getOriginalInteractionResponse(
+  bot: LegacyBot,
+  token: string
+): Promise<Message> {
   const result = await bot.rest.runMethod<DiscordMessage>(
     bot.rest,
     "GET",
-    bot.constants.routes.INTERACTION_ORIGINAL_ID_TOKEN(bot.applicationId, token),
+    bot.constants.routes.INTERACTION_ORIGINAL_ID_TOKEN(bot.applicationId, token)
   );
 
   return bot.transformers.message(bot, result);

@@ -34,22 +34,36 @@ export type InviteMetadata = BaseInvite & {
  *
  * @see {@link https://discord.com/developers/docs/resources/invite#get-invite}
  */
-export async function getInvite(bot: Bot, inviteCode: string, options?: GetInvite): Promise<BaseInvite> {
+export async function getInvite(
+  bot: LegacyBot,
+  inviteCode: string,
+  options?: GetInvite
+): Promise<BaseInvite> {
   const result = await bot.rest.runMethod<DiscordInviteMetadata>(
     bot.rest,
     "GET",
-    bot.constants.routes.INVITE(inviteCode, options),
+    bot.constants.routes.INVITE(inviteCode, options)
   );
 
   return {
     code: result.code,
-    guildId: result.guild?.id ? bot.transformers.snowflake(result.guild.id) : undefined,
-    channelId: result.channel?.id ? bot.transformers.snowflake(result.channel.id) : undefined,
-    inviter: result.inviter ? bot.transformers.user(bot, result.inviter) : undefined,
-    targetType: result.target_type
-      ? (result.target_type === 1 ? TargetTypes.Stream : TargetTypes.EmbeddedApplication)
+    guildId: result.guild?.id
+      ? bot.transformers.snowflake(result.guild.id)
       : undefined,
-    targetUser: result.target_user ? bot.transformers.user(bot, result.target_user) : undefined,
+    channelId: result.channel?.id
+      ? bot.transformers.snowflake(result.channel.id)
+      : undefined,
+    inviter: result.inviter
+      ? bot.transformers.user(bot, result.inviter)
+      : undefined,
+    targetType: result.target_type
+      ? result.target_type === 1
+        ? TargetTypes.Stream
+        : TargetTypes.EmbeddedApplication
+      : undefined,
+    targetUser: result.target_user
+      ? bot.transformers.user(bot, result.target_user)
+      : undefined,
     targetApplicationId: result.target_application?.id
       ? bot.transformers.snowflake(result.target_application.id)
       : undefined,

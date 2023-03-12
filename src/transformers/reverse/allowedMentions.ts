@@ -1,7 +1,8 @@
-import { Bot, AllowedMentions, DiscordAllowedMentions } from "@discordeno/bot";
+import { AllowedMentions, DiscordAllowedMentions } from "@discordeno/bot";
+import { LegacyBot } from "../../index.js";
 
 export function transformAllowedMentionsToDiscordAllowedMentions(
-  bot: Bot,
+  bot: LegacyBot,
   mentions: AllowedMentions
 ): DiscordAllowedMentions {
   return {

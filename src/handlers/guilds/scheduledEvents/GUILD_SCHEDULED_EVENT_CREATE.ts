@@ -5,7 +5,7 @@ import {
 } from "../../../types/discord.js";
 
 export function handleGuildScheduledEventCreate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload,
   shardId: number
 ) {

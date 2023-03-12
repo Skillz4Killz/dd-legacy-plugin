@@ -14,20 +14,23 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild#get-guild}
  */
 export async function getGuild(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   options: { counts?: boolean } = {
     counts: true,
-  },
+  }
 ): Promise<Guild> {
   const result = await bot.rest.runMethod<DiscordGuild>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD(guildId, options.counts),
+    bot.constants.routes.GUILD(guildId, options.counts)
   );
 
   return bot.transformers.guild(bot, {
     guild: result,
-    shardId: bot.utils.calculateShardId(bot.gateway, bot.transformers.snowflake(guildId)),
+    shardId: bot.utils.calculateShardId(
+      bot.gateway,
+      bot.transformers.snowflake(guildId)
+    ),
   });
 }

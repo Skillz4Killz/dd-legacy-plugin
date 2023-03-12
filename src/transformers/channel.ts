@@ -1,6 +1,6 @@
-import { Bot } from "../bot.js";
-import { DiscordChannel } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordChannel } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 const Mask = (1n << 64n) - 1n;
 
@@ -31,7 +31,7 @@ export function separateOverwrites(v: bigint) {
 }
 
 export function transformChannel(
-  bot: Bot,
+  bot: LegacyBot,
   payload: { channel: DiscordChannel } & { guildId?: bigint }
 ) {
   const channel = {

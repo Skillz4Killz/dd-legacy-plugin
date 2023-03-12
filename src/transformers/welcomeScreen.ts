@@ -1,9 +1,9 @@
-import { Bot } from "../bot.js";
-import { DiscordWelcomeScreen } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordWelcomeScreen } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 export function transformWelcomeScreen(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordWelcomeScreen
 ) {
   const welcomeScreen = {

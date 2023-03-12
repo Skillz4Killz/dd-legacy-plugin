@@ -1,10 +1,13 @@
-import { Bot } from "../../bot.js";
+import { LegacyBot } from "../../index.js";
 import {
   DiscordGatewayPayload,
   DiscordIntegrationCreateUpdate,
-} from "../../types/discord.js";
+} from "@discordeno/types";
 
-export function handleIntegrationUpdate(bot: Bot, data: DiscordGatewayPayload) {
+export function handleIntegrationUpdate(
+  bot: LegacyBot,
+  data: DiscordGatewayPayload
+) {
   bot.events.integrationUpdate(
     bot,
     bot.transformers.integration(bot, data.d as DiscordIntegrationCreateUpdate)

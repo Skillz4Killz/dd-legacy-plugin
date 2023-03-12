@@ -14,19 +14,24 @@ import { Collection } from "../../../util/collection.ts";
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command-permissions}
  */
 export async function getApplicationCommandPermissions(
-  bot: Bot,
-  guildId: BigString,
+  bot: LegacyBot,
+  guildId: BigString
 ): Promise<Collection<bigint, ApplicationCommandPermission>> {
-  const results = await bot.rest.runMethod<DiscordGuildApplicationCommandPermissions[]>(
+  const results = await bot.rest.runMethod<
+    DiscordGuildApplicationCommandPermissions[]
+  >(
     bot.rest,
     "GET",
-    bot.constants.routes.COMMANDS_PERMISSIONS(bot.applicationId, guildId),
+    bot.constants.routes.COMMANDS_PERMISSIONS(bot.applicationId, guildId)
   );
 
   return new Collection(
     results.map((result) => {
-      const permission = bot.transformers.applicationCommandPermission(bot, result);
+      const permission = bot.transformers.applicationCommandPermission(
+        bot,
+        result
+      );
       return [permission.id, permission];
-    }),
+    })
   );
 }

@@ -21,12 +21,14 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild#begin-guild-prune}
  */
 export async function pruneMembers(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  options: BeginGuildPrune,
+  options: BeginGuildPrune
 ): Promise<number | undefined> {
-  if (options.days && options.days < 1) throw new Error(bot.constants.Errors.PRUNE_MIN_DAYS);
-  if (options.days && options.days > 30) throw new Error(bot.constants.Errors.PRUNE_MAX_DAYS);
+  if (options.days && options.days < 1)
+    throw new Error(bot.constants.Errors.PRUNE_MIN_DAYS);
+  if (options.days && options.days > 30)
+    throw new Error(bot.constants.Errors.PRUNE_MAX_DAYS);
 
   const result = await bot.rest.runMethod<{ pruned: number | null }>(
     bot.rest,
@@ -36,7 +38,7 @@ export async function pruneMembers(
       days: options.days,
       compute_prune_count: options.computePruneCount,
       include_roles: options.includeRoles,
-    },
+    }
   );
 
   return result.pruned ?? undefined;

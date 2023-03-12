@@ -17,17 +17,22 @@ import { AtLeastOne } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/sticker#modify-guild-sticker}
  */
 export async function editGuildSticker(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: bigint,
   stickerId: bigint,
-  options: AtLeastOne<EditGuildStickerOptions>,
+  options: AtLeastOne<EditGuildStickerOptions>
 ): Promise<Sticker> {
-  const result = await bot.rest.runMethod(bot.rest, "PATCH", bot.constants.routes.GUILD_STICKER(guildId, stickerId), {
-    name: options.name,
-    description: options.description,
-    tags: options.tags,
-    reason: options.reason,
-  });
+  const result = await bot.rest.runMethod(
+    bot.rest,
+    "PATCH",
+    bot.constants.routes.GUILD_STICKER(guildId, stickerId),
+    {
+      name: options.name,
+      description: options.description,
+      tags: options.tags,
+      reason: options.reason,
+    }
+  );
   return bot.transformers.sticker(bot, result);
 }
 

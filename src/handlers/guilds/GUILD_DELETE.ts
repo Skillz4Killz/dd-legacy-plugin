@@ -2,10 +2,10 @@ import type { Bot } from "../../bot.js";
 import {
   DiscordGatewayPayload,
   DiscordUnavailableGuild,
-} from "../../types/discord.js";
+} from "@discordeno/types";
 
 export async function handleGuildDelete(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload,
   shardId: number
 ) {

@@ -1,8 +1,11 @@
-import { Bot } from "../bot.js";
-import { DiscordAttachment } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordAttachment } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
-export function transformAttachment(bot: Bot, payload: DiscordAttachment) {
+export function transformAttachment(
+  bot: LegacyBot,
+  payload: DiscordAttachment
+) {
   const attachment = {
     id: bot.transformers.snowflake(payload.id),
     filename: payload.filename,

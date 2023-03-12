@@ -16,17 +16,20 @@ import { Collection } from "../../../util/collection.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/channel#list-thread-members}
  */
-export async function getThreadMembers(bot: Bot, channelId: BigString): Promise<Collection<bigint, ThreadMember>> {
+export async function getThreadMembers(
+  bot: LegacyBot,
+  channelId: BigString
+): Promise<Collection<bigint, ThreadMember>> {
   const results = await bot.rest.runMethod<DiscordThreadMember[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.THREAD_MEMBERS(channelId),
+    bot.constants.routes.THREAD_MEMBERS(channelId)
   );
 
   return new Collection(
     results.map((result) => {
       const member = bot.transformers.threadMember(bot, result);
       return [member.id!, member];
-    }),
+    })
   );
 }

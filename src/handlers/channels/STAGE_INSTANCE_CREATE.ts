@@ -1,11 +1,8 @@
 import type { Bot } from "../../bot.js";
-import {
-  DiscordGatewayPayload,
-  DiscordStageInstance,
-} from "../../types/discord.js";
+import { DiscordGatewayPayload, DiscordStageInstance } from "@discordeno/types";
 
 export function handleStageInstanceCreate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   const payload = data.d as DiscordStageInstance;

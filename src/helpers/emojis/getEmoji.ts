@@ -13,11 +13,15 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/emoji#get-guild-emoji}
  */
-export async function getEmoji(bot: Bot, guildId: BigString, emojiId: BigString): Promise<Emoji> {
+export async function getEmoji(
+  bot: LegacyBot,
+  guildId: BigString,
+  emojiId: BigString
+): Promise<Emoji> {
   const result = await bot.rest.runMethod<DiscordEmoji>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_EMOJI(guildId, emojiId),
+    bot.constants.routes.GUILD_EMOJI(guildId, emojiId)
   );
 
   return bot.transformers.emoji(bot, result);

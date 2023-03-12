@@ -1,10 +1,10 @@
-import { Bot } from "../../bot.js";
-import {
-  DiscordGatewayPayload,
-  DiscordInviteCreate,
-} from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordGatewayPayload, DiscordInviteCreate } from "@discordeno/types";
 
-export function handleInviteCreate(bot: Bot, data: DiscordGatewayPayload) {
+export function handleInviteCreate(
+  bot: LegacyBot,
+  data: DiscordGatewayPayload
+) {
   bot.events.inviteCreate(
     bot,
     bot.transformers.invite(bot, data.d as DiscordInviteCreate)

@@ -32,11 +32,14 @@ export type GuildPreview = {
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-preview}
  */
-export async function getGuildPreview(bot: Bot, guildId: BigString): Promise<GuildPreview> {
+export async function getGuildPreview(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<GuildPreview> {
   const result = await bot.rest.runMethod<DiscordGuildPreview>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_PREVIEW(guildId),
+    bot.constants.routes.GUILD_PREVIEW(guildId)
   );
 
   return {
@@ -50,6 +53,8 @@ export async function getGuildPreview(bot: Bot, guildId: BigString): Promise<Gui
     approximateMemberCount: result.approximate_member_count,
     approximatePresenceCount: result.approximate_presence_count,
     description: result.description ?? undefined,
-    stickers: result.stickers.map((sticker) => bot.transformers.sticker(bot, sticker)),
+    stickers: result.stickers.map((sticker) =>
+      bot.transformers.sticker(bot, sticker)
+    ),
   };
 }

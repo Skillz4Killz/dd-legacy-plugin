@@ -13,10 +13,13 @@ import type { Bot } from "../../../bot.ts";
  *
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response}
  */
-export async function deleteOriginalInteractionResponse(bot: Bot, token: string): Promise<void> {
+export async function deleteOriginalInteractionResponse(
+  bot: LegacyBot,
+  token: string
+): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
-    bot.constants.routes.INTERACTION_ORIGINAL_ID_TOKEN(bot.applicationId, token),
+    bot.constants.routes.INTERACTION_ORIGINAL_ID_TOKEN(bot.applicationId, token)
   );
 }

@@ -19,11 +19,11 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#delete-message}
  */
 export async function deleteMessage(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   messageId: BigString,
   reason?: string,
-  delayMilliseconds = 0,
+  delayMilliseconds = 0
 ): Promise<void> {
   if (delayMilliseconds) await bot.utils.delay(delayMilliseconds);
 
@@ -31,6 +31,6 @@ export async function deleteMessage(
     bot.rest,
     "DELETE",
     bot.constants.routes.CHANNEL_MESSAGE(channelId, messageId),
-    { reason },
+    { reason }
   );
 }

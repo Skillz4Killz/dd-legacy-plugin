@@ -1,9 +1,9 @@
-import { Bot } from "../bot.js";
-import { DiscordGuildWidgetSettings } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordGuildWidgetSettings } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 export function transformWidgetSettings(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordGuildWidgetSettings
 ) {
   const widget = {

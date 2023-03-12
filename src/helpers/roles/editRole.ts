@@ -19,7 +19,12 @@ import { BigString, PermissionStrings } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#modify-guild-role}
  */
-export async function editRole(bot: Bot, guildId: BigString, roleId: BigString, options: EditGuildRole): Promise<Role> {
+export async function editRole(
+  bot: LegacyBot,
+  guildId: BigString,
+  roleId: BigString,
+  options: EditGuildRole
+): Promise<Role> {
   const result = await bot.rest.runMethod<DiscordRole>(
     bot.rest,
     "PATCH",
@@ -29,13 +34,16 @@ export async function editRole(bot: Bot, guildId: BigString, roleId: BigString, 
       color: options.color,
       hoist: options.hoist,
       mentionable: options.mentionable,
-      permissions: bot.utils.calculateBits(options?.permissions || []),
+      permissions: calculateBits(options?.permissions || []),
       icon: options.icon,
       unicode_emoji: options.unicodeEmoji,
-    },
+    }
   );
 
-  return bot.transformers.role(bot, { role: result, guildId: bot.transformers.snowflake(guildId) });
+  return bot.transformers.role(bot, {
+    role: result,
+    guildId: bot.transformers.snowflake(guildId),
+  });
 }
 
 export interface EditGuildRole {

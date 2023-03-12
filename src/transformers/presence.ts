@@ -1,16 +1,19 @@
-import { Bot } from "../bot.js";
-import { DiscordPresenceUpdate } from "../types/discord.js";
+import { LegacyBot } from "../index.js";
+import { DiscordPresenceUpdate } from "@discordeno/types";
 import { Optionalize, PresenceStatus } from "../types/shared.js";
 import { UserToggles } from "./toggles/user.js";
 
-export function transformPresence(bot: Bot, payload: DiscordPresenceUpdate) {
+export function transformPresence(
+  bot: LegacyBot,
+  payload: DiscordPresenceUpdate
+) {
   const presence = {
     user: {
       id: bot.transformers.snowflake(payload.user.id || ""),
       username: payload.user.username ?? undefined,
       discriminator: payload.user.discriminator ?? undefined,
       avatar: payload.user.avatar
-        ? bot.utils.iconHashToBigInt(payload.user.avatar)
+        ? iconHashToBigInt(payload.user.avatar)
         : undefined,
       locale: payload.user.locale ?? undefined,
       email: payload.user.email ?? undefined,

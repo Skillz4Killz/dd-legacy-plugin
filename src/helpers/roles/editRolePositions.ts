@@ -20,15 +20,15 @@ import { Collection } from "../../util/collection.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild#modify-guild-role-positions}
  */
 export async function modifyRolePositions(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  options: ModifyRolePositions[],
+  options: ModifyRolePositions[]
 ): Promise<Collection<bigint, Role>> {
   const results = await bot.rest.runMethod<DiscordRole[]>(
     bot.rest,
     "PATCH",
     bot.constants.routes.GUILD_ROLES(guildId),
-    options,
+    options
   );
 
   const id = bot.transformers.snowflake(guildId);
@@ -37,7 +37,7 @@ export async function modifyRolePositions(
     results.map((result) => {
       const role = bot.transformers.role(bot, { role: result, guildId: id });
       return [role.id, role];
-    }),
+    })
   );
 }
 

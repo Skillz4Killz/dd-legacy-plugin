@@ -25,10 +25,10 @@ import { BigString } from "../../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response}
  */
 export async function sendInteractionResponse(
-  bot: Bot,
+  bot: LegacyBot,
   interactionId: BigString,
   token: string,
-  options: InteractionResponse,
+  options: InteractionResponse
 ): Promise<void> {
   return await bot.rest.sendRequest<void>(bot.rest, {
     url: bot.constants.routes.INTERACTION_ID_TOKEN(interactionId, token),

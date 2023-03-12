@@ -1,8 +1,8 @@
-import { Bot } from "../bot.js";
-import { DiscordEmbed } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordEmbed } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
-export function transformEmbed(bot: Bot, payload: DiscordEmbed) {
+export function transformEmbed(bot: LegacyBot, payload: DiscordEmbed) {
   const embed = {
     title: payload.title,
     type: payload.type,

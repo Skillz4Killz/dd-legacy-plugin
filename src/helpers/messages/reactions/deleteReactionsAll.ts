@@ -17,10 +17,14 @@ import { BigString } from "../../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/channel#delete-all-reactions}
  */
-export async function deleteReactionsAll(bot: Bot, channelId: BigString, messageId: BigString): Promise<void> {
+export async function deleteReactionsAll(
+  bot: LegacyBot,
+  channelId: BigString,
+  messageId: BigString
+): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
-    bot.constants.routes.CHANNEL_MESSAGE_REACTIONS(channelId, messageId),
+    bot.constants.routes.CHANNEL_MESSAGE_REACTIONS(channelId, messageId)
   );
 }

@@ -2,7 +2,11 @@ import type { Bot } from "../../bot.ts";
 import { Embed } from "../../transformers/embed.ts";
 import { Message } from "../../transformers/message.ts";
 import { DiscordMessage } from "../../types/discord.ts";
-import { AllowedMentions, FileContent, MessageComponents } from "../../types/mod.ts";
+import {
+  AllowedMentions,
+  FileContent,
+  MessageComponents,
+} from "../../types/mod.ts";
 import { BigString, MessageComponentTypes } from "../../types/shared.ts";
 
 /**
@@ -32,7 +36,11 @@ import { BigString, MessageComponentTypes } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
  */
-export async function sendMessage(bot: Bot, channelId: BigString, options: CreateMessage): Promise<Message> {
+export async function sendMessage(
+  bot: LegacyBot,
+  channelId: BigString,
+  options: CreateMessage
+): Promise<Message> {
   const result = await bot.rest.runMethod<DiscordMessage>(
     bot.rest,
     "POST",
@@ -41,14 +49,16 @@ export async function sendMessage(bot: Bot, channelId: BigString, options: Creat
       content: options.content,
       nonce: options.nonce,
       tts: options.tts,
-      embeds: options.embeds?.map((embed) => bot.transformers.reverse.embed(bot, embed)),
+      embeds: options.embeds?.map((embed) =>
+        bot.transformers.reverse.embed(bot, embed)
+      ),
       allowed_mentions: options.allowedMentions
         ? {
-          parse: options.allowedMentions?.parse,
-          roles: options.allowedMentions?.roles?.map((id) => id.toString()),
-          users: options.allowedMentions?.users?.map((id) => id.toString()),
-          replied_user: options.allowedMentions?.repliedUser,
-        }
+            parse: options.allowedMentions?.parse,
+            roles: options.allowedMentions?.roles?.map((id) => id.toString()),
+            users: options.allowedMentions?.users?.map((id) => id.toString()),
+            replied_user: options.allowedMentions?.repliedUser,
+          }
         : undefined,
       file: options.file,
       components: options.components?.map((component) => ({
@@ -61,7 +71,10 @@ export async function sendMessage(bot: Bot, channelId: BigString, options: Creat
               custom_id: subComponent.customId,
               label: subComponent.label,
               placeholder: subComponent.placeholder,
-              min_length: subComponent.minLength ?? subComponent.required === false ? 0 : subComponent.minLength,
+              min_length:
+                subComponent.minLength ?? subComponent.required === false
+                  ? 0
+                  : subComponent.minLength,
               max_length: subComponent.maxLength,
             };
           }
@@ -73,17 +86,18 @@ export async function sendMessage(bot: Bot, channelId: BigString, options: Creat
               placeholder: subComponent.placeholder,
               min_values: subComponent.minValues,
               max_values: subComponent.maxValues,
-              disabled: "disabled" in subComponent ? subComponent.disabled : undefined,
+              disabled:
+                "disabled" in subComponent ? subComponent.disabled : undefined,
               options: subComponent.options.map((option) => ({
                 label: option.label,
                 value: option.value,
                 description: option.description,
                 emoji: option.emoji
                   ? {
-                    id: option.emoji.id?.toString(),
-                    name: option.emoji.name,
-                    animated: option.emoji.animated,
-                  }
+                      id: option.emoji.id?.toString(),
+                      name: option.emoji.name,
+                      animated: option.emoji.animated,
+                    }
                   : undefined,
                 default: option.default,
               })),
@@ -102,7 +116,8 @@ export async function sendMessage(bot: Bot, channelId: BigString, options: Creat
               placeholder: subComponent.placeholder,
               min_values: subComponent.minValues,
               max_values: subComponent.maxValues,
-              disabled: "disabled" in subComponent ? subComponent.disabled : undefined,
+              disabled:
+                "disabled" in subComponent ? subComponent.disabled : undefined,
             };
           }
 
@@ -111,30 +126,33 @@ export async function sendMessage(bot: Bot, channelId: BigString, options: Creat
             custom_id: subComponent.customId,
             label: subComponent.label,
             style: subComponent.style,
-            emoji: "emoji" in subComponent && subComponent.emoji
-              ? {
-                id: subComponent.emoji.id?.toString(),
-                name: subComponent.emoji.name,
-                animated: subComponent.emoji.animated,
-              }
-              : undefined,
+            emoji:
+              "emoji" in subComponent && subComponent.emoji
+                ? {
+                    id: subComponent.emoji.id?.toString(),
+                    name: subComponent.emoji.name,
+                    animated: subComponent.emoji.animated,
+                  }
+                : undefined,
             url: "url" in subComponent ? subComponent.url : undefined,
-            disabled: "disabled" in subComponent ? subComponent.disabled : undefined,
+            disabled:
+              "disabled" in subComponent ? subComponent.disabled : undefined,
           };
         }),
       })),
       ...(options.messageReference?.messageId
         ? {
-          message_reference: {
-            message_id: options.messageReference.messageId.toString(),
-            channel_id: options.messageReference.channelId?.toString(),
-            guild_id: options.messageReference.guildId?.toString(),
-            fail_if_not_exists: options.messageReference.failIfNotExists === true,
-          },
-        }
+            message_reference: {
+              message_id: options.messageReference.messageId.toString(),
+              channel_id: options.messageReference.channelId?.toString(),
+              guild_id: options.messageReference.guildId?.toString(),
+              fail_if_not_exists:
+                options.messageReference.failIfNotExists === true,
+            },
+          }
         : {}),
       sticker_ids: options.stickerIds?.map((sticker) => sticker.toString()),
-    },
+    }
   );
 
   return bot.transformers.message(bot, result);

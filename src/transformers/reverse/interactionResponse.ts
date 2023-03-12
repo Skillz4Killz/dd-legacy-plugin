@@ -1,11 +1,11 @@
-import { Bot } from "../../bot.js";
+import { LegacyBot } from "../../index.js";
 import {
   DiscordInteractionResponse,
   InteractionResponse,
 } from "../../types/mod.js";
 
 export function transformInteractionResponseToDiscordInteractionResponse(
-  bot: Bot,
+  bot: LegacyBot,
   payload: InteractionResponse
 ): DiscordInteractionResponse {
   // If no mentions are provided, force disable mentions

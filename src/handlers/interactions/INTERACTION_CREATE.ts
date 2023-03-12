@@ -1,11 +1,8 @@
-import { Bot } from "../../bot.js";
-import {
-  DiscordGatewayPayload,
-  DiscordInteraction,
-} from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordGatewayPayload, DiscordInteraction } from "@discordeno/types";
 
 export async function handleInteractionCreate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   bot.cache.unrepliedInteractions.add(

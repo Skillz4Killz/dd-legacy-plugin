@@ -17,7 +17,11 @@ import { DiscordWebhook } from "../../types/discord.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/webhook#edit-webhook}
  */
-export async function editWebhook(bot: Bot, webhookId: BigString, options: ModifyWebhook): Promise<Webhook> {
+export async function editWebhook(
+  bot: LegacyBot,
+  webhookId: BigString,
+  options: ModifyWebhook
+): Promise<Webhook> {
   const result = await bot.rest.runMethod<DiscordWebhook>(
     bot.rest,
     "PATCH",
@@ -27,7 +31,7 @@ export async function editWebhook(bot: Bot, webhookId: BigString, options: Modif
       avatar: options.avatar,
       channel_id: options.channelId,
       reason: options.reason,
-    },
+    }
   );
 
   return bot.transformers.webhook(bot, result);

@@ -16,16 +16,16 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/webhook#delete-webhook}
  */
 export async function deleteWebhookMessage(
-  bot: Bot,
+  bot: LegacyBot,
   webhookId: BigString,
   token: string,
   messageId: BigString,
-  options?: DeleteWebhookMessageOptions,
+  options?: DeleteWebhookMessageOptions
 ): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
-    bot.constants.routes.WEBHOOK_MESSAGE(webhookId, token, messageId, options),
+    bot.constants.routes.WEBHOOK_MESSAGE(webhookId, token, messageId, options)
   );
 }
 

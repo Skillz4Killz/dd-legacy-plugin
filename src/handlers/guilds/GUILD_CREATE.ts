@@ -1,9 +1,9 @@
 import type { Bot } from "../../bot.js";
 import type { Guild } from "../../transformers/guild.js";
-import { DiscordGatewayPayload, DiscordGuild } from "../../types/discord.js";
+import { DiscordGatewayPayload, DiscordGuild } from "@discordeno/types";
 
 export function handleGuildCreate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload,
   shardId: number
 ) {

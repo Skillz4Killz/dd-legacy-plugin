@@ -1,9 +1,9 @@
-import { Bot } from "../bot.js";
-import { DiscordAuditLogEntry } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordAuditLogEntry } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 export function transformAuditLogEntry(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordAuditLogEntry
 ) {
   const auditLogEntry = {

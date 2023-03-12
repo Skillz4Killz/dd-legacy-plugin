@@ -1,7 +1,11 @@
 import type { Bot } from "../../bot.ts";
 import { Message } from "../../transformers/message.ts";
 import { DiscordMessage } from "../../types/discord.ts";
-import { BigString, InteractionCallbackData, InteractionResponseTypes } from "../../types/mod.ts";
+import {
+  BigString,
+  InteractionCallbackData,
+  InteractionResponseTypes,
+} from "../../types/mod.ts";
 
 /**
  * Edits the original webhook message.
@@ -18,10 +22,10 @@ import { BigString, InteractionCallbackData, InteractionResponseTypes } from "..
  * @see {@link https://discord.com/developers/docs/resources/webhook#edit-webhook-message}
  */
 export async function editOriginalWebhookMessage(
-  bot: Bot,
+  bot: LegacyBot,
   webhookId: BigString,
   token: string,
-  options: InteractionCallbackData & { threadId?: BigString },
+  options: InteractionCallbackData & { threadId?: BigString }
 ): Promise<Message> {
   const result = await bot.rest.runMethod<DiscordMessage>(
     bot.rest,
@@ -33,7 +37,7 @@ export async function editOriginalWebhookMessage(
         data: options,
       }).data,
       file: options.file,
-    },
+    }
   );
 
   return bot.transformers.message(bot, result);

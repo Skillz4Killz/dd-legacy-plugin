@@ -17,16 +17,16 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild#add-guild-member-role}
  */
 export async function addRole(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   userId: BigString,
   roleId: BigString,
-  reason?: string,
+  reason?: string
 ): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "PUT",
     bot.constants.routes.GUILD_MEMBER_ROLE(guildId, userId, roleId),
-    { reason },
+    { reason }
   );
 }

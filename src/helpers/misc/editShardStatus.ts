@@ -2,7 +2,11 @@ import type { Bot } from "../../bot.ts";
 import { Activity } from "../../transformers/activity.ts";
 import { GatewayOpcodes, PresenceStatus } from "../../types/shared.ts";
 
-export function editShardStatus(bot: Bot, shardId: number, data: StatusUpdate): Promise<void> {
+export function editShardStatus(
+  bot: LegacyBot,
+  shardId: number,
+  data: StatusUpdate
+): Promise<void> {
   const shard = bot.gateway.manager.shards.get(shardId);
   if (!shard) {
     throw new Error(`Shard (id: ${shardId}) not found.`);
@@ -18,43 +22,49 @@ export function editShardStatus(bot: Bot, shardId: number, data: StatusUpdate): 
         type: activity.type,
         url: activity.url,
         created_at: activity.createdAt,
-        timestamps: activity.startedAt || activity.endedAt
-          ? {
-            start: activity.startedAt,
-            end: activity.endedAt,
-          }
-          : undefined,
+        timestamps:
+          activity.startedAt || activity.endedAt
+            ? {
+                start: activity.startedAt,
+                end: activity.endedAt,
+              }
+            : undefined,
         application_id: activity.applicationId?.toString(),
         details: activity.details,
         state: activity.state,
         emoji: activity.emoji
           ? {
-            name: activity.emoji.name,
-            id: activity.emoji.id?.toString(),
-            animated: activity.emoji.animated,
-          }
+              name: activity.emoji.name,
+              id: activity.emoji.id?.toString(),
+              animated: activity.emoji.animated,
+            }
           : undefined,
         party: activity.partyId
           ? {
-            id: activity.partyId.toString(),
-            size: activity.partyMaxSize,
-          }
+              id: activity.partyId.toString(),
+              size: activity.partyMaxSize,
+            }
           : undefined,
-        assets: activity.largeImage || activity.largeText || activity.smallImage || activity.smallText
-          ? {
-            large_image: activity.largeImage,
-            large_text: activity.largeText,
-            small_image: activity.smallImage,
-            small_text: activity.smallText,
-          }
-          : undefined,
-        secrets: activity.join || activity.spectate || activity.match
-          ? {
-            join: activity.join,
-            spectate: activity.spectate,
-            match: activity.match,
-          }
-          : undefined,
+        assets:
+          activity.largeImage ||
+          activity.largeText ||
+          activity.smallImage ||
+          activity.smallText
+            ? {
+                large_image: activity.largeImage,
+                large_text: activity.largeText,
+                small_image: activity.smallImage,
+                small_text: activity.smallText,
+              }
+            : undefined,
+        secrets:
+          activity.join || activity.spectate || activity.match
+            ? {
+                join: activity.join,
+                spectate: activity.spectate,
+                match: activity.match,
+              }
+            : undefined,
         instance: activity.instance,
         flags: activity.flags,
         buttons: activity.buttons,

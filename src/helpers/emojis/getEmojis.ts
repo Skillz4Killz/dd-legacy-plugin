@@ -13,17 +13,20 @@ import { Collection } from "../../util/collection.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/emoji#list-guild-emojis}
  */
-export async function getEmojis(bot: Bot, guildId: BigString): Promise<Collection<bigint, Emoji>> {
+export async function getEmojis(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<Collection<bigint, Emoji>> {
   const results = await bot.rest.runMethod<DiscordEmoji[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_EMOJIS(guildId),
+    bot.constants.routes.GUILD_EMOJIS(guildId)
   );
 
   return new Collection(
     results.map((result) => {
       const emoji = bot.transformers.emoji(bot, result);
       return [emoji.id!, emoji];
-    }),
+    })
   );
 }

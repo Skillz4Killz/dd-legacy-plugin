@@ -1,9 +1,9 @@
-import { Bot } from "../bot.js";
-import { DiscordScheduledEvent } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordScheduledEvent } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 export function transformScheduledEvent(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordScheduledEvent
 ) {
   const scheduledEvent = {
@@ -33,9 +33,7 @@ export function transformScheduledEvent(
     entityType: payload.entity_type,
     userCount: payload.user_count || 0,
     location: payload.entity_metadata?.location,
-    image: payload.image
-      ? bot.utils.iconHashToBigInt(payload.image)
-      : undefined,
+    image: payload.image ? iconHashToBigInt(payload.image) : undefined,
   };
 
   return scheduledEvent as Optionalize<typeof scheduledEvent>;

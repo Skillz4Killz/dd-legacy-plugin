@@ -1,11 +1,11 @@
-import { Bot } from "../../bot.js";
+import { LegacyBot } from "../../index.js";
 import {
   DiscordGatewayPayload,
   DiscordMessageReactionRemoveEmoji,
-} from "../../types/discord.js";
+} from "@discordeno/types";
 
 export async function handleMessageReactionRemoveEmoji(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   const payload = data.d as DiscordMessageReactionRemoveEmoji;

@@ -23,14 +23,14 @@ import { ActiveThreads } from "./getActiveThreads.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#list-public-archived-threads}
  */
 export async function getPublicArchivedThreads(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
-  options?: ListArchivedThreads,
+  options?: ListArchivedThreads
 ): Promise<ArchivedThreads> {
   const results = await bot.rest.runMethod<DiscordListArchivedThreads>(
     bot.rest,
     "GET",
-    bot.constants.routes.THREAD_ARCHIVED_PUBLIC(channelId, options),
+    bot.constants.routes.THREAD_ARCHIVED_PUBLIC(channelId, options)
   );
 
   return {
@@ -38,13 +38,13 @@ export async function getPublicArchivedThreads(
       results.threads.map((result) => {
         const thread = bot.transformers.channel(bot, { channel: result });
         return [thread.id, thread];
-      }),
+      })
     ),
     members: new Collection(
       results.members.map((result) => {
         const member = bot.transformers.threadMember(bot, result);
         return [member.id!, member];
-      }),
+      })
     ),
     hasMore: results.has_more,
   };

@@ -12,11 +12,14 @@ import { BigString } from "../../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/stage-instance#get-stage-instance}
  */
-export async function getStageInstance(bot: Bot, channelId: BigString): Promise<StageInstance> {
+export async function getStageInstance(
+  bot: LegacyBot,
+  channelId: BigString
+): Promise<StageInstance> {
   const result = await bot.rest.runMethod<DiscordStageInstance>(
     bot.rest,
     "GET",
-    bot.constants.routes.STAGE_INSTANCE(channelId),
+    bot.constants.routes.STAGE_INSTANCE(channelId)
   );
 
   return bot.transformers.stageInstance(bot, result);

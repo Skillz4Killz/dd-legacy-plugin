@@ -12,11 +12,14 @@ import { BigString } from "../../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#get-global-application-command}
  */
-export async function getGlobalApplicationCommand(bot: Bot, commandId: BigString): Promise<ApplicationCommand> {
+export async function getGlobalApplicationCommand(
+  bot: LegacyBot,
+  commandId: BigString
+): Promise<ApplicationCommand> {
   const result = await bot.rest.runMethod<DiscordApplicationCommand>(
     bot.rest,
     "GET",
-    bot.constants.routes.COMMANDS_ID(bot.applicationId, commandId),
+    bot.constants.routes.COMMANDS_ID(bot.applicationId, commandId)
   );
 
   return bot.transformers.applicationCommand(bot, result);

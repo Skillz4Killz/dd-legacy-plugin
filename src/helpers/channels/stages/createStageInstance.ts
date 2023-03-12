@@ -17,7 +17,10 @@ import { DiscordStageInstance } from "../../../types/discord.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/stage-instance#create-stage-instance}
  */
-export async function createStageInstance(bot: Bot, options: CreateStageInstance): Promise<StageInstance> {
+export async function createStageInstance(
+  bot: LegacyBot,
+  options: CreateStageInstance
+): Promise<StageInstance> {
   const result = await bot.rest.runMethod<DiscordStageInstance>(
     bot.rest,
     "POST",
@@ -27,7 +30,7 @@ export async function createStageInstance(bot: Bot, options: CreateStageInstance
       topic: options.topic,
       send_start_notification: options.sendStartNotification,
       reason: options.reason,
-    },
+    }
   );
 
   return bot.transformers.stageInstance(bot, result);

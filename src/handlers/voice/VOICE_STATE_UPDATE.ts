@@ -1,11 +1,8 @@
-import { Bot } from "../../bot.js";
-import {
-  DiscordGatewayPayload,
-  DiscordVoiceState,
-} from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordGatewayPayload, DiscordVoiceState } from "@discordeno/types";
 
 export async function handleVoiceStateUpdate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   const payload = data.d as DiscordVoiceState;

@@ -1,11 +1,8 @@
 import type { Bot } from "../../bot.js";
-import {
-  DiscordGatewayPayload,
-  DiscordAuditLogEntry,
-} from "../../types/discord.js";
+import { DiscordGatewayPayload, DiscordAuditLogEntry } from "@discordeno/types";
 
 export async function handleGuildAuditLogEntryCreate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   // TODO: better type here

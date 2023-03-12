@@ -15,21 +15,21 @@ import { Collection } from "../../../util/collection.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#list-scheduled-events-for-guild}
  */
 export async function getScheduledEvents(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  options?: GetScheduledEvents,
+  options?: GetScheduledEvents
 ): Promise<Collection<bigint, ScheduledEvent>> {
   const results = await bot.rest.runMethod<DiscordScheduledEvent[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_SCHEDULED_EVENTS(guildId, options?.withUserCount),
+    bot.constants.routes.GUILD_SCHEDULED_EVENTS(guildId, options?.withUserCount)
   );
 
   return new Collection(
     results.map((result) => {
       const event = bot.transformers.scheduledEvent(bot, result);
       return [event.id, event];
-    }),
+    })
   );
 }
 

@@ -16,14 +16,18 @@ import { BigString } from "../../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command}
  */
 export async function getGuildApplicationCommand(
-  bot: Bot,
+  bot: LegacyBot,
   commandId: BigString,
-  guildId: BigString,
+  guildId: BigString
 ): Promise<ApplicationCommand> {
   const result = await bot.rest.runMethod<DiscordApplicationCommand>(
     bot.rest,
     "GET",
-    bot.constants.routes.COMMANDS_GUILD_ID(bot.applicationId, guildId, commandId),
+    bot.constants.routes.COMMANDS_GUILD_ID(
+      bot.applicationId,
+      guildId,
+      commandId
+    )
   );
 
   return bot.transformers.applicationCommand(bot, result);

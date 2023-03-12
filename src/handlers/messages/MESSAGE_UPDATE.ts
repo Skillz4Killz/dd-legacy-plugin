@@ -1,8 +1,8 @@
-import { Bot } from "../../bot.js";
-import { DiscordGatewayPayload, DiscordMessage } from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordGatewayPayload, DiscordMessage } from "@discordeno/types";
 
 export async function handleMessageUpdate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   const payload = data.d as DiscordMessage;

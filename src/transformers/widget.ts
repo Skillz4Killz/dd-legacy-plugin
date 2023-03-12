@@ -1,8 +1,9 @@
-import { Bot } from "../bot.js";
-import { DiscordGuildWidget } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordGuildWidget } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
+import { iconHashToBigInt } from "@discordeno/bot";
 
-export function transformWidget(bot: Bot, payload: DiscordGuildWidget) {
+export function transformWidget(bot: LegacyBot, payload: DiscordGuildWidget) {
   const widget = {
     id: bot.transformers.snowflake(payload.id),
     name: payload.name,
@@ -16,9 +17,7 @@ export function transformWidget(bot: Bot, payload: DiscordGuildWidget) {
       id: bot.transformers.snowflake(member.id),
       username: member.username,
       discriminator: member.discriminator,
-      avatar: member.avatar
-        ? bot.utils.iconHashToBigInt(member.avatar)
-        : undefined,
+      avatar: member.avatar ? iconHashToBigInt(member.avatar) : undefined,
       status: member.status,
       avatarUrl: member.avatar_url,
     })),

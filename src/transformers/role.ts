@@ -1,10 +1,10 @@
-import { Bot } from "../bot.js";
-import { DiscordRole } from "../types/discord.js";
+import { LegacyBot } from "../index.js";
+import { DiscordRole } from "@discordeno/types";
 import { RoleToggles } from "./toggles/role.js";
-import { Optionalize } from "../types/shared.js";
+import { Optionalize } from "../optionalize.js";
 
 export function transformRole(
-  bot: Bot,
+  bot: LegacyBot,
   payload: { role: DiscordRole } & { guildId: bigint }
 ) {
   const role = {
@@ -22,9 +22,7 @@ export function transformRole(
       ? bot.transformers.snowflake(payload.role.tags.integration_id)
       : undefined,
     permissions: bot.transformers.snowflake(payload.role.permissions),
-    icon: payload.role.icon
-      ? bot.utils.iconHashToBigInt(payload.role.icon)
-      : undefined,
+    icon: payload.role.icon ? iconHashToBigInt(payload.role.icon) : undefined,
     unicodeEmoji: payload.role.unicode_emoji,
   };
 

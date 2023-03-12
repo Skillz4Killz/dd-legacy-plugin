@@ -1,9 +1,9 @@
-import { Bot } from "../../bot.js";
-import { DiscordGuildApplicationCommandPermissions } from "../../types/discord.js";
+import { DiscordGuildApplicationCommandPermissions } from "@discordeno/bot";
+import { LegacyBot } from "../../index.js";
 import { ApplicationCommandPermission } from "../applicationCommandPermission.js";
 
 export function transformApplicationCommandPermissionToDiscordApplicationCommandPermission(
-  bot: Bot,
+  bot: LegacyBot,
   payload: ApplicationCommandPermission
 ): DiscordGuildApplicationCommandPermissions {
   return {

@@ -20,17 +20,21 @@ import { processReactionString } from "./getReactions.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#delete-own-reaction}
  */
 export async function deleteOwnReaction(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   messageId: BigString,
-  reaction: string,
+  reaction: string
 ): Promise<void> {
   reaction = processReactionString(reaction);
 
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
-    bot.constants.routes.CHANNEL_MESSAGE_REACTION_ME(channelId, messageId, reaction),
+    bot.constants.routes.CHANNEL_MESSAGE_REACTION_ME(
+      channelId,
+      messageId,
+      reaction
+    )
   );
 }
 
@@ -53,11 +57,11 @@ export async function deleteOwnReaction(
  * @see {@link https://discord.com/developers/docs/resources/channel#delete-user-reaction}
  */
 export async function deleteUserReaction(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   messageId: BigString,
   userId: BigString,
-  reaction: string,
+  reaction: string
 ): Promise<void> {
   reaction = processReactionString(reaction);
 
@@ -68,7 +72,7 @@ export async function deleteUserReaction(
       channelId,
       messageId,
       reaction,
-      userId,
-    ),
+      userId
+    )
   );
 }

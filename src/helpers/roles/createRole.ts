@@ -19,21 +19,26 @@ import { BigString, PermissionStrings } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild#create-guild-role}
  */
 export async function createRole(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   options: CreateGuildRole,
-  reason?: string,
+  reason?: string
 ): Promise<Role> {
-  const result = await bot.rest.runMethod<DiscordRole>(bot.rest, "POST", bot.constants.routes.GUILD_ROLES(guildId), {
-    name: options.name,
-    color: options.color,
-    hoist: options.hoist,
-    mentionable: options.mentionable,
-    permissions: bot.utils.calculateBits(options?.permissions || []),
-    icon: options.icon,
-    unicode_emoji: options.unicodeEmoji,
-    reason,
-  });
+  const result = await bot.rest.runMethod<DiscordRole>(
+    bot.rest,
+    "POST",
+    bot.constants.routes.GUILD_ROLES(guildId),
+    {
+      name: options.name,
+      color: options.color,
+      hoist: options.hoist,
+      mentionable: options.mentionable,
+      permissions: calculateBits(options?.permissions || []),
+      icon: options.icon,
+      unicode_emoji: options.unicodeEmoji,
+      reason,
+    }
+  );
 
   return bot.transformers.role(bot, {
     role: result,

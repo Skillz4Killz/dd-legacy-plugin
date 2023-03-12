@@ -36,55 +36,82 @@ export type AuditLog = {
  *
  * @see {@link https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log}
  */
-export async function getAuditLog(bot: Bot, guildId: BigString, options?: GetGuildAuditLog): Promise<AuditLog> {
+export async function getAuditLog(
+  bot: LegacyBot,
+  guildId: BigString,
+  options?: GetGuildAuditLog
+): Promise<AuditLog> {
   if (options?.limit) {
-    options.limit = options.limit >= 1 && options.limit <= 100 ? options.limit : 50;
+    options.limit =
+      options.limit >= 1 && options.limit <= 100 ? options.limit : 50;
   }
 
   const result = await bot.rest.runMethod<DiscordAuditLog>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_AUDIT_LOGS(guildId, options),
+    bot.constants.routes.GUILD_AUDIT_LOGS(guildId, options)
   );
 
   const id = bot.transformers.snowflake(guildId);
   return {
-    auditLogEntries: result.audit_log_entries.map((entry) => bot.transformers.auditLogEntry(bot, entry)),
-    autoModerationRules: result.auto_moderation_rules?.map((rule) => bot.transformers.automodRule(bot, rule)),
-    guildScheduledEvents: result.guild_scheduled_events?.map((event) => bot.transformers.scheduledEvent(bot, event)),
+    auditLogEntries: result.audit_log_entries.map((entry) =>
+      bot.transformers.auditLogEntry(bot, entry)
+    ),
+    autoModerationRules: result.auto_moderation_rules?.map((rule) =>
+      bot.transformers.automodRule(bot, rule)
+    ),
+    guildScheduledEvents: result.guild_scheduled_events?.map((event) =>
+      bot.transformers.scheduledEvent(bot, event)
+    ),
     integrations: result.integrations.map((integration) => ({
-      id: integration.id ? bot.transformers.snowflake(integration.id) : undefined,
+      id: integration.id
+        ? bot.transformers.snowflake(integration.id)
+        : undefined,
       name: integration.name,
       type: integration.type,
       enabled: integration.enabled,
       syncing: integration.syncing,
-      roleId: integration.role_id ? bot.transformers.snowflake(integration.role_id) : undefined,
+      roleId: integration.role_id
+        ? bot.transformers.snowflake(integration.role_id)
+        : undefined,
       enableEmoticons: integration.enable_emoticons,
       expireBehavior: integration.expire_behavior,
       expireGracePeriod: integration.expire_grace_period,
-      user: integration.user ? bot.transformers.user(bot, integration.user) : undefined,
+      user: integration.user
+        ? bot.transformers.user(bot, integration.user)
+        : undefined,
       account: integration.account
         ? {
-          id: bot.transformers.snowflake(integration.account.id),
-          name: integration.account.name,
-        }
+            id: bot.transformers.snowflake(integration.account.id),
+            name: integration.account.name,
+          }
         : undefined,
-      syncedAt: integration.synced_at ? Date.parse(integration.synced_at) : undefined,
+      syncedAt: integration.synced_at
+        ? Date.parse(integration.synced_at)
+        : undefined,
       subscriberCount: integration.subscriber_count,
       revoked: integration.revoked,
       application: integration.application
         ? {
-          id: bot.transformers.snowflake(integration.application.id),
-          name: integration.application.name,
-          icon: integration.application.icon ? bot.utils.iconHashToBigInt(integration.application.icon) : undefined,
-          description: integration.application.description,
-          bot: integration.application.bot ? bot.transformers.user(bot, integration.application.bot) : undefined,
-        }
+            id: bot.transformers.snowflake(integration.application.id),
+            name: integration.application.name,
+            icon: integration.application.icon
+              ? iconHashToBigInt(integration.application.icon)
+              : undefined,
+            description: integration.application.description,
+            bot: integration.application.bot
+              ? bot.transformers.user(bot, integration.application.bot)
+              : undefined,
+          }
         : undefined,
     })),
-    threads: result.threads.map((thread) => bot.transformers.channel(bot, { channel: thread, guildId: id })),
+    threads: result.threads.map((thread) =>
+      bot.transformers.channel(bot, { channel: thread, guildId: id })
+    ),
     users: result.users.map((user) => bot.transformers.user(bot, user)),
-    webhooks: result.webhooks.map((hook) => bot.transformers.webhook(bot, hook)),
+    webhooks: result.webhooks.map((hook) =>
+      bot.transformers.webhook(bot, hook)
+    ),
     applicationCommands: result.application_commands.map((applicationCommand) =>
       bot.transformers.applicationCommand(bot, applicationCommand)
     ),

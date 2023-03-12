@@ -1,11 +1,14 @@
-import { Bot } from "../bot.js";
+import { LegacyBot } from "../index.js";
 import {
   DiscordThreadMember,
   DiscordThreadMemberGuildCreate,
-} from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+} from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
-export function transformThreadMember(bot: Bot, payload: DiscordThreadMember) {
+export function transformThreadMember(
+  bot: LegacyBot,
+  payload: DiscordThreadMember
+) {
   const threadMember = {
     id: payload.id ? bot.transformers.snowflake(payload.id) : undefined,
     userId: payload.user_id
@@ -19,7 +22,7 @@ export function transformThreadMember(bot: Bot, payload: DiscordThreadMember) {
 }
 
 export function transformThreadMemberGuildCreate(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordThreadMemberGuildCreate
 ) {
   const threadMember = {

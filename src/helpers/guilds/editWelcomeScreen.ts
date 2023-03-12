@@ -19,9 +19,9 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen}
  */
 export async function editWelcomeScreen(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  options: ModifyGuildWelcomeScreen,
+  options: ModifyGuildWelcomeScreen
 ): Promise<WelcomeScreen> {
   const result = await bot.rest.runMethod<DiscordWelcomeScreen>(
     bot.rest,
@@ -36,7 +36,7 @@ export async function editWelcomeScreen(
         emoji_name: welcomeScreen.emojiName,
       })),
       description: options.description,
-    },
+    }
   );
 
   return bot.transformers.welcomeScreen(bot, result);

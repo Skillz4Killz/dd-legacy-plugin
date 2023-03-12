@@ -1,8 +1,8 @@
-import { Bot } from "../bot.js";
-import { DiscordActivity } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { DiscordActivity } from "@discordeno/bot";
+import { Optionalize } from "../optionalize.js";
+import { LegacyBot } from "../index.js";
 
-export function transformActivity(bot: Bot, payload: DiscordActivity) {
+export function transformActivity(bot: LegacyBot, payload: DiscordActivity) {
   const activity = {
     name: payload.name,
     type: payload.type,

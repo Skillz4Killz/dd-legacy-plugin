@@ -1,9 +1,9 @@
-import { Bot } from "../bot.js";
-import { DiscordIntegrationCreateUpdate } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordIntegrationCreateUpdate } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 export function transformIntegration(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordIntegrationCreateUpdate
 ) {
   const integration = {
@@ -32,7 +32,7 @@ export function transformIntegration(
           id: bot.transformers.snowflake(payload.application.id),
           name: payload.application.name,
           icon: payload.application.icon
-            ? bot.utils.iconHashToBigInt(payload.application.icon)
+            ? iconHashToBigInt(payload.application.icon)
             : undefined,
           description: payload.application.description,
           bot: payload.application.bot

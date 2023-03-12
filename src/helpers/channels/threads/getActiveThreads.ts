@@ -17,11 +17,14 @@ import { Collection } from "../../../util/collection.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#list-active-guild-threads}
  */
-export async function getActiveThreads(bot: Bot, guildId: BigString): Promise<ActiveThreads> {
+export async function getActiveThreads(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<ActiveThreads> {
   const results = await bot.rest.runMethod<DiscordListActiveThreads>(
     bot.rest,
     "GET",
-    bot.constants.routes.THREAD_ACTIVE(guildId),
+    bot.constants.routes.THREAD_ACTIVE(guildId)
   );
 
   return {
@@ -29,13 +32,13 @@ export async function getActiveThreads(bot: Bot, guildId: BigString): Promise<Ac
       results.threads.map((result) => {
         const thread = bot.transformers.channel(bot, { channel: result });
         return [thread.id, thread];
-      }),
+      })
     ),
     members: new Collection(
       results.members.map((result) => {
         const member = bot.transformers.threadMember(bot, result);
         return [member.id!, member];
-      }),
+      })
     ),
   };
 }

@@ -16,11 +16,14 @@ import { Collection } from "../../../util/collection.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-integrations}
  */
-export async function getIntegrations(bot: Bot, guildId: BigString): Promise<Collection<bigint, Integration>> {
+export async function getIntegrations(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<Collection<bigint, Integration>> {
   const results = await bot.rest.runMethod<DiscordIntegration[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_INTEGRATIONS(guildId),
+    bot.constants.routes.GUILD_INTEGRATIONS(guildId)
   );
 
   return new Collection(
@@ -45,6 +48,6 @@ export async function getIntegrations(bot: Bot, guildId: BigString): Promise<Col
         scopes: result.scopes,
       });
       return [integration.id, integration];
-    }),
+    })
   );
 }

@@ -1,8 +1,8 @@
-import { Bot } from "../bot.js";
-import { DiscordSticker, DiscordStickerPack } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordSticker, DiscordStickerPack } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
-export function transformSticker(bot: Bot, payload: DiscordSticker) {
+export function transformSticker(bot: LegacyBot, payload: DiscordSticker) {
   const sticker = {
     id: bot.utils.snowflakeToBigint(payload.id),
     packId: payload.pack_id
@@ -24,7 +24,10 @@ export function transformSticker(bot: Bot, payload: DiscordSticker) {
   return sticker as Optionalize<typeof sticker>;
 }
 
-export function transformStickerPack(bot: Bot, payload: DiscordStickerPack) {
+export function transformStickerPack(
+  bot: LegacyBot,
+  payload: DiscordStickerPack
+) {
   const pack = {
     id: bot.transformers.snowflake(payload.id),
     stickers: payload.stickers.map((sticker) =>

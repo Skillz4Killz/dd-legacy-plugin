@@ -16,17 +16,20 @@ import { Collection } from "../../util/collection.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/webhook#get-channel-webhooks}
  */
-export async function getChannelWebhooks(bot: Bot, channelId: BigString): Promise<Collection<bigint, Webhook>> {
+export async function getChannelWebhooks(
+  bot: LegacyBot,
+  channelId: BigString
+): Promise<Collection<bigint, Webhook>> {
   const results = await bot.rest.runMethod<DiscordWebhook[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.CHANNEL_WEBHOOKS(channelId),
+    bot.constants.routes.CHANNEL_WEBHOOKS(channelId)
   );
 
   return new Collection(
     results.map((result) => {
       const webhook = bot.transformers.webhook(bot, result);
       return [webhook.id, webhook];
-    }),
+    })
   );
 }

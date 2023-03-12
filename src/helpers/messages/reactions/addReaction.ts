@@ -24,16 +24,20 @@ import { processReactionString } from "./getReactions.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#create-reaction}
  */
 export async function addReaction(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   messageId: BigString,
-  reaction: string,
+  reaction: string
 ): Promise<void> {
   reaction = processReactionString(reaction);
 
   return await bot.rest.runMethod<void>(
     bot.rest,
     "PUT",
-    bot.constants.routes.CHANNEL_MESSAGE_REACTION_ME(channelId, messageId, reaction),
+    bot.constants.routes.CHANNEL_MESSAGE_REACTION_ME(
+      channelId,
+      messageId,
+      reaction
+    )
   );
 }

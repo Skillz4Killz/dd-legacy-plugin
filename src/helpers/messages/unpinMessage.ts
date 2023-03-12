@@ -18,15 +18,15 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#unpin-message}
  */
 export async function unpinMessage(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   messageId: BigString,
-  reason?: string,
+  reason?: string
 ): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
     bot.constants.routes.CHANNEL_PIN(channelId, messageId),
-    reason ? { reason } : undefined,
+    reason ? { reason } : undefined
   );
 }

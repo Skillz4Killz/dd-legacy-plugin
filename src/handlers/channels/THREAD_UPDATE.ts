@@ -1,8 +1,8 @@
-import { Bot } from "../../bot.js";
-import { DiscordChannel, DiscordGatewayPayload } from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordChannel, DiscordGatewayPayload } from "@discordeno/types";
 
 export async function handleThreadUpdate(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload
 ) {
   const payload = data.d as DiscordChannel;

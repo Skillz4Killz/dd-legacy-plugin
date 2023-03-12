@@ -1,5 +1,5 @@
-import { Bot } from "../../bot.js";
-import { DiscordPresenceUpdate } from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordPresenceUpdate } from "@discordeno/types";
 import { PresenceStatus } from "../../types/shared.js";
 import { PresenceUpdate } from "../presence.js";
 
@@ -11,7 +11,7 @@ export const reverseStatusTypes = Object.freeze({
 } as const);
 
 export function transformPresenceToDiscordPresence(
-  bot: Bot,
+  bot: LegacyBot,
   payload: PresenceUpdate
 ): DiscordPresenceUpdate {
   return {

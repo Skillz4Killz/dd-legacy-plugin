@@ -15,6 +15,14 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#remove-guild-ban}
  */
-export async function unbanMember(bot: Bot, guildId: BigString, userId: BigString): Promise<void> {
-  return await bot.rest.runMethod<void>(bot.rest, "DELETE", bot.constants.routes.GUILD_BAN(guildId, userId));
+export async function unbanMember(
+  bot: LegacyBot,
+  guildId: BigString,
+  userId: BigString
+): Promise<void> {
+  return await bot.rest.runMethod<void>(
+    bot.rest,
+    "DELETE",
+    bot.constants.routes.GUILD_BAN(guildId, userId)
+  );
 }

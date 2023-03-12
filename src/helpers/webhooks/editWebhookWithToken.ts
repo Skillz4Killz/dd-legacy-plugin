@@ -20,10 +20,10 @@ import { ModifyWebhook } from "./editWebhook.ts";
  * @see {@link https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token}
  */
 export async function editWebhookWithToken(
-  bot: Bot,
+  bot: LegacyBot,
   webhookId: BigString,
   token: string,
-  options: Omit<ModifyWebhook, "channelId">,
+  options: Omit<ModifyWebhook, "channelId">
 ): Promise<Webhook> {
   const result = await bot.rest.runMethod<DiscordWebhook>(
     bot.rest,
@@ -32,7 +32,7 @@ export async function editWebhookWithToken(
     {
       name: options.name,
       avatar: options.avatar,
-    },
+    }
   );
 
   return bot.transformers.webhook(bot, result);

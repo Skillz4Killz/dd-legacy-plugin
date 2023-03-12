@@ -1,12 +1,12 @@
 import type { Emoji } from "../transformers/emoji.js";
-import { Bot } from "../bot.js";
+import { LegacyBot } from "../index.js";
 import { Collection } from "../util/collection.js";
-import { DiscordGuild } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { DiscordGuild } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 import { GuildToggles } from "./toggles/guild.js";
 
 export function transformGuild(
-  bot: Bot,
+  bot: LegacyBot,
   payload: { guild: DiscordGuild } & { shardId: number }
 ) {
   const guildId = bot.transformers.snowflake(payload.guild.id);
@@ -57,7 +57,7 @@ export function transformGuild(
         }
       : undefined,
     discoverySplash: payload.guild.discovery_splash
-      ? bot.utils.iconHashToBigInt(payload.guild.discovery_splash)
+      ? iconHashToBigInt(payload.guild.discovery_splash)
       : undefined,
 
     joinedAt: payload.guild.joined_at
@@ -65,14 +65,12 @@ export function transformGuild(
       : undefined,
     memberCount: payload.guild.member_count ?? 0,
     shardId: payload.shardId,
-    icon: payload.guild.icon
-      ? bot.utils.iconHashToBigInt(payload.guild.icon)
-      : undefined,
+    icon: payload.guild.icon ? iconHashToBigInt(payload.guild.icon) : undefined,
     banner: payload.guild.banner
-      ? bot.utils.iconHashToBigInt(payload.guild.banner)
+      ? iconHashToBigInt(payload.guild.banner)
       : undefined,
     splash: payload.guild.splash
-      ? bot.utils.iconHashToBigInt(payload.guild.splash)
+      ? iconHashToBigInt(payload.guild.splash)
       : undefined,
     channels: new Collection(
       payload.guild.channels?.map((channel) => {

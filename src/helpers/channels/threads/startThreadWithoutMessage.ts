@@ -20,9 +20,9 @@ import { BigString, ChannelTypes } from "../../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#start-thread-without-message}
  */
 export async function startThreadWithoutMessage(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
-  options: StartThreadWithoutMessage,
+  options: StartThreadWithoutMessage
 ): Promise<Channel> {
   const result = await bot.rest.runMethod<DiscordChannel>(
     bot.rest,
@@ -35,12 +35,14 @@ export async function startThreadWithoutMessage(
       type: options.type,
       invitable: options.invitable,
       reason: options.reason,
-    },
+    }
   );
 
   return bot.transformers.channel(bot, {
     channel: result,
-    guildId: result.guild_id ? bot.transformers.snowflake(result.guild_id) : undefined,
+    guildId: result.guild_id
+      ? bot.transformers.snowflake(result.guild_id)
+      : undefined,
   });
 }
 
@@ -52,7 +54,10 @@ export interface StartThreadWithoutMessage extends WithReason {
   /** Amount of seconds a user has to wait before sending another message (0-21600) */
   rateLimitPerUser?: number | null;
   /** the type of thread to create */
-  type: ChannelTypes.AnnouncementThread | ChannelTypes.PublicThread | ChannelTypes.PrivateThread;
+  type:
+    | ChannelTypes.AnnouncementThread
+    | ChannelTypes.PublicThread
+    | ChannelTypes.PrivateThread;
   /** whether non-moderators can add other non-moderators to a thread; only available when creating a private thread */
   invitable?: boolean;
 }

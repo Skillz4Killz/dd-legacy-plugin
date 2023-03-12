@@ -1,19 +1,22 @@
-import { Bot } from "../bot.js";
+import { LegacyBot } from "../index.js";
 import {
   DiscordAttachment,
   DiscordInteraction,
   DiscordInteractionDataOption,
   DiscordInteractionDataResolved,
-} from "../types/discord.js";
+} from "@discordeno/types";
 import { ChannelTypes } from "../types/shared.js";
 import { Collection } from "../util/collection.js";
 import { Attachment } from "./attachment.js";
 import { Member, User } from "./member.js";
 import { Message } from "./message.js";
 import { Role } from "./role.js";
-import { Optionalize } from "../types/shared.js";
+import { Optionalize } from "../optionalize.js";
 
-export function transformInteraction(bot: Bot, payload: DiscordInteraction) {
+export function transformInteraction(
+  bot: LegacyBot,
+  payload: DiscordInteraction
+) {
   const guildId = payload.guild_id
     ? bot.transformers.snowflake(payload.guild_id)
     : undefined;
@@ -85,7 +88,7 @@ export function transformInteraction(bot: Bot, payload: DiscordInteraction) {
 }
 
 export function transformInteractionDataOption(
-  bot: Bot,
+  bot: LegacyBot,
   option: DiscordInteractionDataOption
 ) {
   const opt = {
@@ -100,7 +103,7 @@ export function transformInteractionDataOption(
 }
 
 export function transformInteractionDataResolved(
-  bot: Bot,
+  bot: LegacyBot,
   resolved: DiscordInteractionDataResolved,
   guildId?: bigint
 ) {

@@ -12,10 +12,18 @@ import { BigString } from "../../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command}
  */
-export async function deleteGuildApplicationCommand(bot: Bot, commandId: BigString, guildId: BigString): Promise<void> {
+export async function deleteGuildApplicationCommand(
+  bot: LegacyBot,
+  commandId: BigString,
+  guildId: BigString
+): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
-    bot.constants.routes.COMMANDS_GUILD_ID(bot.applicationId, guildId, commandId),
+    bot.constants.routes.COMMANDS_GUILD_ID(
+      bot.applicationId,
+      guildId,
+      commandId
+    )
   );
 }

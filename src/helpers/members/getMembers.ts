@@ -26,23 +26,28 @@ import { Collection } from "../../util/collection.ts";
  * @see {@link https://discord.com/developers/docs/topics/rate-limits#rate-limits}
  */
 export async function getMembers(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  options: ListGuildMembers,
+  options: ListGuildMembers
 ): Promise<Collection<bigint, Member>> {
   const results = await bot.rest.runMethod<DiscordMemberWithUser[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_MEMBERS(guildId, options),
+    bot.constants.routes.GUILD_MEMBERS(guildId, options)
   );
 
   const id = bot.transformers.snowflake(guildId);
 
   return new Collection(
     results.map((result) => {
-      const member = bot.transformers.member(bot, result, id, bot.transformers.snowflake(result.user.id));
+      const member = bot.transformers.member(
+        bot,
+        result,
+        id,
+        bot.transformers.snowflake(result.user.id)
+      );
       return [member.id, member];
-    }),
+    })
   );
 }
 

@@ -20,16 +20,22 @@ import { DiscordWebhook } from "../../types/discord.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/webhook#create-webhook}
  */
-export async function createWebhook(bot: Bot, channelId: BigString, options: CreateWebhook): Promise<Webhook> {
+export async function createWebhook(
+  bot: LegacyBot,
+  channelId: BigString,
+  options: CreateWebhook
+): Promise<Webhook> {
   const result = await bot.rest.runMethod<DiscordWebhook>(
     bot.rest,
     "POST",
     bot.constants.routes.CHANNEL_WEBHOOKS(channelId),
     {
       name: options.name,
-      avatar: options.avatar ? await bot.utils.urlToBase64(options.avatar) : undefined,
+      avatar: options.avatar
+        ? await bot.utils.urlToBase64(options.avatar)
+        : undefined,
       reason: options.reason,
-    },
+    }
   );
 
   return bot.transformers.webhook(bot, result);

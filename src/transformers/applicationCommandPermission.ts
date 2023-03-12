@@ -1,9 +1,9 @@
-import { Bot } from "../bot.js";
-import { DiscordGuildApplicationCommandPermissions } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordGuildApplicationCommandPermissions } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 export function transformApplicationCommandPermission(
-  bot: Bot,
+  bot: LegacyBot,
   payload: DiscordGuildApplicationCommandPermissions
 ) {
   const applicationCommandPermission = {

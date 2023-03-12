@@ -1,7 +1,10 @@
 import type { Bot } from "../../../bot.ts";
 import { ApplicationCommandPermission } from "../../../transformers/applicationCommandPermission.ts";
 import { DiscordGuildApplicationCommandPermissions } from "../../../types/discord.ts";
-import { ApplicationCommandPermissionTypes, BigString } from "../../../types/shared.ts";
+import {
+  ApplicationCommandPermissionTypes,
+  BigString,
+} from "../../../types/shared.ts";
 
 // TODO: Make `options` into an object with a `permissions` field.
 
@@ -21,24 +24,29 @@ import { ApplicationCommandPermissionTypes, BigString } from "../../../types/sha
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions}
  */
 export async function editApplicationCommandPermissions(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   commandId: BigString,
   /** Bearer token which has the `applications.commands.permissions.update` scope and also access to this guild.  */
   bearerToken: string,
-  options: ApplicationCommandPermissions[],
+  options: ApplicationCommandPermissions[]
 ): Promise<ApplicationCommandPermission> {
-  const result = await bot.rest.runMethod<DiscordGuildApplicationCommandPermissions>(
-    bot.rest,
-    "PUT",
-    bot.constants.routes.COMMANDS_PERMISSION(bot.applicationId, guildId, commandId),
-    {
-      permissions: options,
-    },
-    {
-      headers: { authorization: `Bearer ${bearerToken}` },
-    },
-  );
+  const result =
+    await bot.rest.runMethod<DiscordGuildApplicationCommandPermissions>(
+      bot.rest,
+      "PUT",
+      bot.constants.routes.COMMANDS_PERMISSION(
+        bot.applicationId,
+        guildId,
+        commandId
+      ),
+      {
+        permissions: options,
+      },
+      {
+        headers: { authorization: `Bearer ${bearerToken}` },
+      }
+    );
 
   return bot.transformers.applicationCommandPermission(bot, result);
 }

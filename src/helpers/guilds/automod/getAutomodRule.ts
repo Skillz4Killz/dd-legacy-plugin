@@ -16,11 +16,15 @@ import { BigString } from "../../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/auto-moderation#get-auto-moderation-rule}
  */
-export async function getAutomodRule(bot: Bot, guildId: BigString, ruleId: BigString): Promise<AutoModerationRule> {
+export async function getAutomodRule(
+  bot: LegacyBot,
+  guildId: BigString,
+  ruleId: BigString
+): Promise<AutoModerationRule> {
   const result = await bot.rest.runMethod<DiscordAutoModerationRule>(
     bot.rest,
     "GET",
-    bot.constants.routes.AUTOMOD_RULE(guildId, ruleId),
+    bot.constants.routes.AUTOMOD_RULE(guildId, ruleId)
   );
 
   return bot.transformers.automodRule(bot, result);

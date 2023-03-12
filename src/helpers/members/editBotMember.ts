@@ -15,9 +15,9 @@ import { BigString, DiscordMember, Member, WithReason } from "../../mod.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild#modify-current-member}
  */
 export async function editBotMember(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  options: EditBotMemberOptions,
+  options: EditBotMemberOptions
 ): Promise<Member> {
   const result = await bot.rest.runMethod<DiscordMember>(
     bot.rest,
@@ -26,10 +26,15 @@ export async function editBotMember(
     {
       nick: options.nick,
       reason: options.reason,
-    },
+    }
   );
 
-  return bot.transformers.member(bot, result, bot.transformers.snowflake(guildId), bot.id);
+  return bot.transformers.member(
+    bot,
+    result,
+    bot.transformers.snowflake(guildId),
+    bot.id
+  );
 }
 
 export interface EditBotMemberOptions extends WithReason {

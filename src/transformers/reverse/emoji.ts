@@ -1,9 +1,9 @@
-import { Bot } from "../../bot.js";
-import { DiscordEmoji } from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordEmoji } from "@discordeno/types";
 import { Emoji } from "../emoji.js";
 
 export function transformEmojiToDiscordEmoji(
-  bot: Bot,
+  bot: LegacyBot,
   payload: Emoji
 ): DiscordEmoji {
   return {

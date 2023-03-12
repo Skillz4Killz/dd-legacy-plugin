@@ -13,6 +13,14 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token}
  */
-export async function deleteWebhookWithToken(bot: Bot, webhookId: BigString, token: string): Promise<void> {
-  return await bot.rest.runMethod<void>(bot.rest, "DELETE", bot.constants.routes.WEBHOOK(webhookId, token));
+export async function deleteWebhookWithToken(
+  bot: LegacyBot,
+  webhookId: BigString,
+  token: string
+): Promise<void> {
+  return await bot.rest.runMethod<void>(
+    bot.rest,
+    "DELETE",
+    bot.constants.routes.WEBHOOK(webhookId, token)
+  );
 }

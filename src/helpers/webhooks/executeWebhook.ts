@@ -2,7 +2,11 @@ import type { Bot } from "../../bot.ts";
 import { Embed } from "../../transformers/embed.ts";
 import { Message } from "../../transformers/message.ts";
 import { DiscordMessage } from "../../types/discord.ts";
-import { AllowedMentions, FileContent, MessageComponents } from "../../types/discordeno.ts";
+import {
+  AllowedMentions,
+  FileContent,
+  MessageComponents,
+} from "../../types/discordeno.ts";
 import { BigString } from "../../types/shared.ts";
 
 export const sendWebhookMessage = executeWebhook;
@@ -22,18 +26,18 @@ export const sendWebhookMessage = executeWebhook;
  * @see {@link https://discord.com/developers/docs/resources/webhook#execute-webhook}
  */
 export async function executeWebhook(
-  bot: Bot,
+  bot: LegacyBot,
   webhookId: BigString,
   token: string,
-  options: ExecuteWebhook,
+  options: ExecuteWebhook
 ): Promise<Message | undefined> {
   const allowedMentions = options.allowedMentions
     ? {
-      parse: options.allowedMentions.parse,
-      replied_user: options.allowedMentions.repliedUser,
-      users: options.allowedMentions.users?.map((id) => id.toString()),
-      roles: options.allowedMentions.roles?.map((id) => id.toString()),
-    }
+        parse: options.allowedMentions.parse,
+        replied_user: options.allowedMentions.repliedUser,
+        users: options.allowedMentions.users?.map((id) => id.toString()),
+        roles: options.allowedMentions.roles?.map((id) => id.toString()),
+      }
     : { parse: [] };
 
   const result = await bot.rest.runMethod<DiscordMessage>(
@@ -49,10 +53,14 @@ export async function executeWebhook(
       avatar_url: options.avatarUrl,
       tts: options.tts,
       file: options.file,
-      embeds: options.embeds?.map((embed) => bot.transformers.reverse.embed(bot, embed)),
+      embeds: options.embeds?.map((embed) =>
+        bot.transformers.reverse.embed(bot, embed)
+      ),
       allowed_mentions: allowedMentions,
-      components: options.components?.map((component) => bot.transformers.reverse.component(bot, component)),
-    },
+      components: options.components?.map((component) =>
+        bot.transformers.reverse.component(bot, component)
+      ),
+    }
   );
   if (!options.wait) return;
 

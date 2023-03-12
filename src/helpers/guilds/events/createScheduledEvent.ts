@@ -2,7 +2,11 @@ import { Bot } from "../../../bot.ts";
 import { WithReason } from "../../../mod.ts";
 import { ScheduledEvent } from "../../../transformers/scheduledEvent.ts";
 import { DiscordScheduledEvent } from "../../../types/discord.ts";
-import { BigString, ScheduledEventEntityType, ScheduledEventPrivacyLevel } from "../../../types/shared.ts";
+import {
+  BigString,
+  ScheduledEventEntityType,
+  ScheduledEventPrivacyLevel,
+} from "../../../types/shared.ts";
 
 /**
  * Creates a scheduled event in a guild.
@@ -22,14 +26,17 @@ import { BigString, ScheduledEventEntityType, ScheduledEventPrivacyLevel } from 
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event}
  */
 export async function createScheduledEvent(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  options: CreateScheduledEvent,
+  options: CreateScheduledEvent
 ): Promise<ScheduledEvent> {
   if (!bot.utils.validateLength(options.name, { min: 1, max: 100 })) {
     throw new Error("Name must be between 1-100 characters.");
   }
-  if (options.description && !bot.utils.validateLength(options.description, { max: 1000 })) {
+  if (
+    options.description &&
+    !bot.utils.validateLength(options.description, { max: 1000 })
+  ) {
     throw new Error("Description must be below 1000 characters.");
   }
   if (options.location) {
@@ -41,10 +48,18 @@ export async function createScheduledEvent(
     }
   }
   if (options.entityType === ScheduledEventEntityType.External) {
-    if (!options.scheduledEndTime) throw new Error("A scheduled end time is required when making an External event.");
-    if (!options.location) throw new Error("A location is required when making an External event.");
+    if (!options.scheduledEndTime)
+      throw new Error(
+        "A scheduled end time is required when making an External event."
+      );
+    if (!options.location)
+      throw new Error("A location is required when making an External event.");
   }
-  if (options.scheduledStartTime && options.scheduledEndTime && options.scheduledStartTime > options.scheduledEndTime) {
+  if (
+    options.scheduledStartTime &&
+    options.scheduledEndTime &&
+    options.scheduledStartTime > options.scheduledEndTime
+  ) {
     throw new Error("Cannot schedule event to end before starting.");
   }
 
@@ -54,15 +69,20 @@ export async function createScheduledEvent(
     bot.constants.routes.GUILD_SCHEDULED_EVENTS(guildId),
     {
       channel_id: options.channelId?.toString(),
-      entity_metadata: options.location ? { location: options.location } : undefined,
+      entity_metadata: options.location
+        ? { location: options.location }
+        : undefined,
       name: options.name,
       description: options.description,
       scheduled_start_time: new Date(options.scheduledStartTime).toISOString(),
-      scheduled_end_time: options.scheduledEndTime ? new Date(options.scheduledEndTime).toISOString() : undefined,
-      privacy_level: options.privacyLevel || ScheduledEventPrivacyLevel.GuildOnly,
+      scheduled_end_time: options.scheduledEndTime
+        ? new Date(options.scheduledEndTime).toISOString()
+        : undefined,
+      privacy_level:
+        options.privacyLevel || ScheduledEventPrivacyLevel.GuildOnly,
       entity_type: options.entityType,
       reason: options.reason,
-    },
+    }
   );
 
   return bot.transformers.scheduledEvent(bot, result);

@@ -19,17 +19,20 @@ import { Collection } from "../../util/collection.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/channel#get-pinned-messages}
  */
-export async function getPinnedMessages(bot: Bot, channelId: BigString): Promise<Collection<bigint, Message>> {
+export async function getPinnedMessages(
+  bot: LegacyBot,
+  channelId: BigString
+): Promise<Collection<bigint, Message>> {
   const results = await bot.rest.runMethod<DiscordMessage[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.CHANNEL_PINS(channelId),
+    bot.constants.routes.CHANNEL_PINS(channelId)
   );
 
   return new Collection(
     results.map((result) => {
       const message = bot.transformers.message(bot, result);
       return [message.id, message];
-    }),
+    })
   );
 }

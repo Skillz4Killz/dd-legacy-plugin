@@ -1,5 +1,4 @@
-import { DiscordGuild } from "../../types/discord.js";
-import { GuildFeatures } from "../../types/shared.js";
+import { DiscordGuild, GuildFeatures } from "@discordeno/bot";
 import { ToggleBitfieldBigint } from "./ToggleBitfield.js";
 
 const featureNames = [
@@ -98,6 +97,8 @@ export class GuildToggles extends ToggleBitfieldBigint {
       this.bitfield = guildOrTogglesBigint;
     else {
       const guild = guildOrTogglesBigint;
+      // Cause discord be smart like that
+      if (!guild.features) guild.features = [];
 
       if (guild.owner) this.add(GuildToggle.owner);
       if (guild.widget_enabled) this.add(GuildToggle.widgetEnabled);

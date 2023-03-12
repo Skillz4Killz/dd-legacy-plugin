@@ -15,15 +15,19 @@ import { BigString } from "../../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event}
  */
 export async function getScheduledEvent(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   eventId: BigString,
-  options?: { withUserCount?: boolean },
+  options?: { withUserCount?: boolean }
 ): Promise<ScheduledEvent> {
   const result = await bot.rest.runMethod<DiscordScheduledEvent>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_SCHEDULED_EVENT(guildId, eventId, options?.withUserCount),
+    bot.constants.routes.GUILD_SCHEDULED_EVENT(
+      guildId,
+      eventId,
+      options?.withUserCount
+    )
   );
 
   return bot.transformers.scheduledEvent(bot, result);

@@ -23,9 +23,9 @@ import { BaseInvite } from "./getInvite.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#create-channel-invite}
  */
 export async function createInvite(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
-  options: CreateChannelInvite = {},
+  options: CreateChannelInvite = {}
 ): Promise<BaseInvite> {
   const result = await bot.rest.runMethod<DiscordInvite>(
     bot.rest,
@@ -40,16 +40,24 @@ export async function createInvite(
       target_user_id: options.targetUserId?.toString(),
       target_application_id: options.targetApplicationId?.toString(),
       reason: options.reason,
-    },
+    }
   );
 
   return {
     code: result.code,
-    guildId: result.guild?.id ? bot.transformers.snowflake(result.guild.id) : undefined,
-    channelId: result.channel?.id ? bot.transformers.snowflake(result.channel.id) : undefined,
-    inviter: result.inviter ? bot.transformers.user(bot, result.inviter) : undefined,
+    guildId: result.guild?.id
+      ? bot.transformers.snowflake(result.guild.id)
+      : undefined,
+    channelId: result.channel?.id
+      ? bot.transformers.snowflake(result.channel.id)
+      : undefined,
+    inviter: result.inviter
+      ? bot.transformers.user(bot, result.inviter)
+      : undefined,
     targetType: result.target_type,
-    targetUser: result.target_user ? bot.transformers.user(bot, result.target_user) : undefined,
+    targetUser: result.target_user
+      ? bot.transformers.user(bot, result.target_user)
+      : undefined,
     targetApplicationId: result.target_application?.id
       ? bot.transformers.snowflake(result.target_application.id)
       : undefined,

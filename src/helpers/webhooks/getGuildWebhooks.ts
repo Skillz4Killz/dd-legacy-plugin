@@ -16,17 +16,20 @@ import { Collection } from "../../util/collection.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/webhook#get-guild-webhooks}
  */
-export async function getGuildWebhooks(bot: Bot, guildId: BigString): Promise<Collection<bigint, Webhook>> {
+export async function getGuildWebhooks(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<Collection<bigint, Webhook>> {
   const results = await bot.rest.runMethod<DiscordWebhook[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_WEBHOOKS(guildId),
+    bot.constants.routes.GUILD_WEBHOOKS(guildId)
   );
 
   return new Collection(
     results.map((result) => {
       const webhook = bot.transformers.webhook(bot, result);
       return [webhook.id, webhook];
-    }),
+    })
   );
 }

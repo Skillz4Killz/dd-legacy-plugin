@@ -1,10 +1,13 @@
-import { Bot } from "../bot.js";
-import { DiscordVoiceRegion } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordVoiceRegion } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
 // TODO: Rename `VoiceRegions` to `VoiceRegion`.
 
-export function transformVoiceRegion(bot: Bot, payload: DiscordVoiceRegion) {
+export function transformVoiceRegion(
+  bot: LegacyBot,
+  payload: DiscordVoiceRegion
+) {
   const voiceRegion = {
     id: payload.id,
     name: payload.name,

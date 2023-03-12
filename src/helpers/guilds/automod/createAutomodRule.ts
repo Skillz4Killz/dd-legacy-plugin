@@ -25,9 +25,9 @@ import {
  * @see {@link https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule}
  */
 export async function createAutomodRule(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  options: CreateAutoModerationRuleOptions,
+  options: CreateAutoModerationRuleOptions
 ): Promise<AutoModerationRule> {
   const result = await bot.rest.runMethod<DiscordAutoModerationRule>(
     bot.rest,
@@ -47,16 +47,16 @@ export async function createAutomodRule(
         type: action.type,
         metadata: action.metadata
           ? {
-            channel_id: action.metadata.channelId?.toString(),
-            duration_seconds: action.metadata.durationSeconds,
-          }
+              channel_id: action.metadata.channelId?.toString(),
+              duration_seconds: action.metadata.durationSeconds,
+            }
           : undefined,
       })),
       enabled: options.enabled ?? true,
       exempt_roles: options.exemptRoles?.map((id) => id.toString()),
       exempt_channels: options.exemptChannels?.map((id) => id.toString()),
       reason: options.reason,
-    },
+    }
   );
 
   return bot.transformers.automodRule(bot, result);

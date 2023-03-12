@@ -16,17 +16,20 @@ import { Collection } from "../../util/collection.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild-template#get-guild-templates}
  */
-export async function getGuildTemplates(bot: Bot, guildId: BigString): Promise<Collection<string, Template>> {
+export async function getGuildTemplates(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<Collection<string, Template>> {
   const results = await bot.rest.runMethod<DiscordTemplate[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_TEMPLATES(guildId),
+    bot.constants.routes.GUILD_TEMPLATES(guildId)
   );
 
   return new Collection(
     results.map((result) => {
       const template = bot.transformers.template(bot, result);
       return [template.code, template];
-    }),
+    })
   );
 }

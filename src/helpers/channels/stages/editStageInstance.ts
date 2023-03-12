@@ -18,9 +18,9 @@ import { DiscordStageInstance } from "../../../types/discord.ts";
  * @see {@link https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance}
  */
 export async function editStageInstance(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
-  data: EditStageInstanceOptions,
+  data: EditStageInstanceOptions
 ): Promise<StageInstance> {
   const result = await bot.rest.runMethod<DiscordStageInstance>(
     bot.rest,
@@ -28,7 +28,7 @@ export async function editStageInstance(
     bot.constants.routes.STAGE_INSTANCE(channelId),
     {
       topic: data.topic,
-    },
+    }
   );
 
   return bot.transformers.stageInstance(bot, result);

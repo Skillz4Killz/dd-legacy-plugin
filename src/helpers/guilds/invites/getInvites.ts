@@ -16,30 +16,45 @@ import { InviteMetadata } from "./getInvite.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/invite#get-invites}
  */
-export async function getInvites(bot: Bot, guildId: BigString): Promise<Collection<string, InviteMetadata>> {
+export async function getInvites(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<Collection<string, InviteMetadata>> {
   const results = await bot.rest.runMethod<DiscordInviteMetadata[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_INVITES(guildId),
+    bot.constants.routes.GUILD_INVITES(guildId)
   );
 
   return new Collection(
     results.map<[string, InviteMetadata]>((result) => {
       const inviteMetadata = {
         code: result.code,
-        guildId: result.guild?.id ? bot.transformers.snowflake(result.guild.id) : undefined,
-        channelId: result.channel?.id ? bot.transformers.snowflake(result.channel.id) : undefined,
-        inviter: result.inviter ? bot.transformers.user(bot, result.inviter) : undefined,
-        targetType: result.target_type
-          ? (result.target_type === 1 ? TargetTypes.Stream : TargetTypes.EmbeddedApplication)
+        guildId: result.guild?.id
+          ? bot.transformers.snowflake(result.guild.id)
           : undefined,
-        targetUser: result.target_user ? bot.transformers.user(bot, result.target_user) : undefined,
+        channelId: result.channel?.id
+          ? bot.transformers.snowflake(result.channel.id)
+          : undefined,
+        inviter: result.inviter
+          ? bot.transformers.user(bot, result.inviter)
+          : undefined,
+        targetType: result.target_type
+          ? result.target_type === 1
+            ? TargetTypes.Stream
+            : TargetTypes.EmbeddedApplication
+          : undefined,
+        targetUser: result.target_user
+          ? bot.transformers.user(bot, result.target_user)
+          : undefined,
         targetApplicationId: result.target_application?.id
           ? bot.transformers.snowflake(result.target_application.id)
           : undefined,
         approximatePresenceCount: result.approximate_presence_count,
         approximateMemberCount: result.approximate_member_count,
-        expiresAt: result.expires_at ? Date.parse(result.expires_at) : undefined,
+        expiresAt: result.expires_at
+          ? Date.parse(result.expires_at)
+          : undefined,
         guildScheduledEvent: result.guild_scheduled_event
           ? bot.transformers.scheduledEvent(bot, result.guild_scheduled_event)
           : undefined,
@@ -51,6 +66,6 @@ export async function getInvites(bot: Bot, guildId: BigString): Promise<Collecti
         createdAt: Date.parse(result.created_at),
       };
       return [inviteMetadata.code, inviteMetadata];
-    }),
+    })
   );
 }

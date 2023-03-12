@@ -9,10 +9,13 @@ import { BigString } from "../../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#delete-global-application-command}
  */
-export async function deleteGlobalApplicationCommand(bot: Bot, commandId: BigString): Promise<void> {
+export async function deleteGlobalApplicationCommand(
+  bot: LegacyBot,
+  commandId: BigString
+): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
-    bot.constants.routes.COMMANDS_ID(bot.applicationId, commandId),
+    bot.constants.routes.COMMANDS_ID(bot.applicationId, commandId)
   );
 }

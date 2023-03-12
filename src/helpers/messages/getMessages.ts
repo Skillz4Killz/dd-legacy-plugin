@@ -22,9 +22,9 @@ import { hasProperty } from "../../util/utils.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#get-channel-messages}
  */
 export async function getMessages(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
-  options?: GetMessagesOptions,
+  options?: GetMessagesOptions
 ): Promise<Collection<bigint, Message>> {
   if (options?.limit && (options.limit < 0 || options.limit > 100)) {
     throw new Error(bot.constants.Errors.INVALID_GET_MESSAGES_LIMIT);
@@ -33,14 +33,14 @@ export async function getMessages(
   const results = await bot.rest.runMethod<DiscordMessage[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.CHANNEL_MESSAGES(channelId, options),
+    bot.constants.routes.CHANNEL_MESSAGES(channelId, options)
   );
 
   return new Collection(
     results.map((result) => {
       const message = bot.transformers.message(bot, result);
       return [message.id, message];
-    }),
+    })
   );
 }
 
@@ -68,20 +68,32 @@ export interface GetMessagesAfter extends GetMessagesLimit {
   after?: BigString;
 }
 
-export type GetMessagesOptions = GetMessagesAfter | GetMessagesBefore | GetMessagesAround | GetMessagesLimit;
+export type GetMessagesOptions =
+  | GetMessagesAfter
+  | GetMessagesBefore
+  | GetMessagesAround
+  | GetMessagesLimit;
 
-export function isGetMessagesAfter(options: GetMessagesOptions): options is GetMessagesAfter {
+export function isGetMessagesAfter(
+  options: GetMessagesOptions
+): options is GetMessagesAfter {
   return hasProperty(options, "after");
 }
 
-export function isGetMessagesBefore(options: GetMessagesOptions): options is GetMessagesBefore {
+export function isGetMessagesBefore(
+  options: GetMessagesOptions
+): options is GetMessagesBefore {
   return hasProperty(options, "before");
 }
 
-export function isGetMessagesAround(options: GetMessagesOptions): options is GetMessagesAround {
+export function isGetMessagesAround(
+  options: GetMessagesOptions
+): options is GetMessagesAround {
   return hasProperty(options, "around");
 }
 
-export function isGetMessagesLimit(options: GetMessagesOptions): options is GetMessagesLimit {
+export function isGetMessagesLimit(
+  options: GetMessagesOptions
+): options is GetMessagesLimit {
   return hasProperty(options, "limit");
 }

@@ -1,15 +1,15 @@
-import { Bot } from "../bot.js";
-import { DiscordTeam } from "../types/discord.js";
-import { Optionalize } from "../types/shared.js";
+import { LegacyBot } from "../index.js";
+import { DiscordTeam } from "@discordeno/types";
+import { Optionalize } from "../optionalize.js";
 
-export function transformTeam(bot: Bot, payload: DiscordTeam) {
+export function transformTeam(bot: LegacyBot, payload: DiscordTeam) {
   const id = bot.transformers.snowflake(payload.id);
 
   const team = {
     name: payload.name,
 
     id,
-    icon: payload.icon ? bot.utils.iconHashToBigInt(payload.icon) : undefined,
+    icon: payload.icon ? iconHashToBigInt(payload.icon) : undefined,
     ownerUserId: bot.transformers.snowflake(payload.owner_user_id),
     members: payload.members.map((member) => ({
       membershipState: member.membership_state,

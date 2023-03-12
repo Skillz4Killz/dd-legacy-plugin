@@ -12,11 +12,14 @@ import { BigString } from "../../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-widget}
  */
-export async function getWidget(bot: Bot, guildId: BigString): Promise<GuildWidget> {
+export async function getWidget(
+  bot: LegacyBot,
+  guildId: BigString
+): Promise<GuildWidget> {
   const result = await bot.rest.runMethod<DiscordGuildWidget>(
     bot.rest,
     "GET",
-    bot.constants.routes.GUILD_WIDGET_JSON(guildId),
+    bot.constants.routes.GUILD_WIDGET_JSON(guildId)
   );
 
   return bot.transformers.widget(bot, result);

@@ -48,13 +48,25 @@ import {
 } from "@discordeno/bot";
 import { Activity, transformActivity } from "./transformers/activity";
 import { Application, transformApplication } from "./transformers/application";
-import { ApplicationCommand, transformApplicationCommand } from "./transformers/applicationCommand";
+import {
+  ApplicationCommand,
+  transformApplicationCommand,
+} from "./transformers/applicationCommand";
 import { transformApplicationCommandOption } from "./transformers/applicationCommandOption";
 import { transformApplicationCommandOptionChoice } from "./transformers/applicationCommandOptionChoice";
-import { ApplicationCommandPermission, transformApplicationCommandPermission } from "./transformers/applicationCommandPermission";
+import {
+  ApplicationCommandPermission,
+  transformApplicationCommandPermission,
+} from "./transformers/applicationCommandPermission";
 import { Attachment, transformAttachment } from "./transformers/attachment";
-import { AuditLogEntry, transformAuditLogEntry } from "./transformers/auditLogEntry";
-import { AutoModerationRule, transformAutoModerationRule } from "./transformers/automodRule";
+import {
+  AuditLogEntry,
+  transformAuditLogEntry,
+} from "./transformers/auditLogEntry";
+import {
+  AutoModerationRule,
+  transformAutoModerationRule,
+} from "./transformers/automodRule";
 import { Channel, transformChannel } from "./transformers/channel";
 import { Component, transformComponent } from "./transformers/component";
 import { Embed, transformEmbed } from "./transformers/embed";
@@ -62,146 +74,200 @@ import { Emoji, transformEmoji } from "./transformers/emoji";
 import { GetGatewayBot, transformGatewayBot } from "./transformers/gatewayBot";
 import { Guild, transformGuild } from "./transformers/guild";
 import { Integration, transformIntegration } from "./transformers/integration";
-import { Interaction, InteractionDataOption, transformInteraction, transformInteractionDataOption } from "./transformers/interaction";
+import {
+  Interaction,
+  InteractionDataOption,
+  transformInteraction,
+  transformInteractionDataOption,
+} from "./transformers/interaction";
 import { Invite, transformInvite } from "./transformers/invite";
-import { Member, User, transformMember, transformUser } from "./transformers/member";
+import {
+  Member,
+  User,
+  transformMember,
+  transformUser,
+} from "./transformers/member";
 import { Message, transformMessage } from "./transformers/message";
-import { transformEmbedToDiscordEmbed, transformComponentToDiscordComponent, transformActivityToDiscordActivity, transformMemberToDiscordMember, transformUserToDiscordUser, transformTeamToDiscordTeam, transformApplicationToDiscordApplication, transformApplicationCommandToDiscordApplicationCommand, transformApplicationCommandOptionToDiscordApplicationCommandOption, transformApplicationCommandOptionChoiceToDiscordApplicationCommandOptionChoice, transformAttachmentToDiscordAttachment } from "./transformers/mod";
+import {
+  transformEmbedToDiscordEmbed,
+  transformComponentToDiscordComponent,
+  transformActivityToDiscordActivity,
+  transformMemberToDiscordMember,
+  transformUserToDiscordUser,
+  transformTeamToDiscordTeam,
+  transformApplicationToDiscordApplication,
+  transformApplicationCommandToDiscordApplicationCommand,
+  transformApplicationCommandOptionToDiscordApplicationCommandOption,
+  transformApplicationCommandOptionChoiceToDiscordApplicationCommandOptionChoice,
+  transformAttachmentToDiscordAttachment,
+} from "./transformers/mod";
 import { PresenceUpdate, transformPresence } from "./transformers/presence";
 import { transformAllowedMentionsToDiscordAllowedMentions } from "./transformers/reverse/allowedMentions";
 import { Role, transformRole } from "./transformers/role";
-import { ScheduledEvent, transformScheduledEvent } from "./transformers/scheduledEvent";
-import { StageInstance, transformStageInstance } from "./transformers/stageInstance";
-import { Sticker, StickerPack, transformSticker, transformStickerPack } from "./transformers/sticker";
+import {
+  ScheduledEvent,
+  transformScheduledEvent,
+} from "./transformers/scheduledEvent";
+import {
+  StageInstance,
+  transformStageInstance,
+} from "./transformers/stageInstance";
+import {
+  Sticker,
+  StickerPack,
+  transformSticker,
+  transformStickerPack,
+} from "./transformers/sticker";
 import { Team, transformTeam } from "./transformers/team";
 import { Template, transformTemplate } from "./transformers/template";
-import { ThreadMember, transformThreadMember } from "./transformers/threadMember";
+import {
+  ThreadMember,
+  transformThreadMember,
+} from "./transformers/threadMember";
 import { VoiceRegions, transformVoiceRegion } from "./transformers/voiceRegion";
 import { VoiceState, transformVoiceState } from "./transformers/voiceState";
 import { Webhook, transformWebhook } from "./transformers/webhook";
-import { WelcomeScreen, transformWelcomeScreen } from "./transformers/welcomeScreen";
+import {
+  WelcomeScreen,
+  transformWelcomeScreen,
+} from "./transformers/welcomeScreen";
 import { GuildWidget, transformWidget } from "./transformers/widget";
-import { GuildWidgetSettings, transformWidgetSettings } from "./transformers/widgetSettings";
+import {
+  GuildWidgetSettings,
+  transformWidgetSettings,
+} from "./transformers/widgetSettings";
 
 export interface Transformers {
   reverse: {
     allowedMentions: (
-      bot: Bot,
+      bot: LegacyBot,
       payload: AllowedMentions
     ) => DiscordAllowedMentions;
-    embed: (bot: Bot, payload: Embed) => DiscordEmbed;
-    component: (bot: Bot, payload: Component) => DiscordComponent;
-    activity: (bot: Bot, payload: Activity) => DiscordActivity;
-    member: (bot: Bot, payload: Member) => DiscordMember;
-    user: (bot: Bot, payload: User) => DiscordUser;
-    team: (bot: Bot, payload: Team) => DiscordTeam;
-    application: (bot: Bot, payload: Application) => DiscordApplication;
+    embed: (bot: LegacyBot, payload: Embed) => DiscordEmbed;
+    component: (bot: LegacyBot, payload: Component) => DiscordComponent;
+    activity: (bot: LegacyBot, payload: Activity) => DiscordActivity;
+    member: (bot: LegacyBot, payload: Member) => DiscordMember;
+    user: (bot: LegacyBot, payload: User) => DiscordUser;
+    team: (bot: LegacyBot, payload: Team) => DiscordTeam;
+    application: (bot: LegacyBot, payload: Application) => DiscordApplication;
     snowflake: (snowflake: BigString) => string;
     createApplicationCommand: (
-      bot: Bot,
+      bot: LegacyBot,
       payload: CreateApplicationCommand
     ) => DiscordCreateApplicationCommand;
     applicationCommand: (
-      bot: Bot,
+      bot: LegacyBot,
       payload: ApplicationCommand
     ) => DiscordApplicationCommand;
     applicationCommandOption: (
-      bot: Bot,
+      bot: LegacyBot,
       payload: ApplicationCommandOption
     ) => DiscordApplicationCommandOption;
     applicationCommandOptionChoice: (
-      bot: Bot,
+      bot: LegacyBot,
       payload: ApplicationCommandOptionChoice
     ) => DiscordApplicationCommandOptionChoice;
     interactionResponse: (
-      bot: Bot,
+      bot: LegacyBot,
       payload: InteractionResponse
     ) => DiscordInteractionResponse;
-    attachment: (bot: Bot, payload: Attachment) => DiscordAttachment;
+    attachment: (bot: LegacyBot, payload: Attachment) => DiscordAttachment;
   };
   snowflake: (snowflake: BigString) => bigint;
   gatewayBot: (payload: DiscordGetGatewayBot) => GetGatewayBot;
   automodRule: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: DiscordAutoModerationRule
   ) => AutoModerationRule;
   automodActionExecution: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: DiscordAutoModerationActionExecution
   ) => AutoModerationActionExecution;
   channel: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: { channel: DiscordChannel } & { guildId?: bigint }
   ) => Channel;
   guild: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: { guild: DiscordGuild } & { shardId: number }
   ) => Guild;
-  user: (bot: Bot, payload: DiscordUser) => User;
+  user: (bot: LegacyBot, payload: DiscordUser) => User;
   member: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: DiscordMember,
     guildId: bigint,
     userId: bigint
   ) => Member;
-  message: (bot: Bot, payload: DiscordMessage) => Message;
+  message: (bot: LegacyBot, payload: DiscordMessage) => Message;
   role: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: { role: DiscordRole } & { guildId: bigint }
   ) => Role;
   voiceState: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: { voiceState: DiscordVoiceState } & { guildId: bigint }
   ) => VoiceState;
-  interaction: (bot: Bot, payload: DiscordInteraction) => Interaction;
+  interaction: (bot: LegacyBot, payload: DiscordInteraction) => Interaction;
   interactionDataOptions: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: DiscordInteractionDataOption
   ) => InteractionDataOption;
   integration: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: DiscordIntegrationCreateUpdate
   ) => Integration;
-  invite: (bot: Bot, invite: DiscordInviteCreate) => Invite;
-  application: (bot: Bot, payload: DiscordApplication) => Application;
-  team: (bot: Bot, payload: DiscordTeam) => Team;
-  emoji: (bot: Bot, payload: DiscordEmoji) => Emoji;
-  activity: (bot: Bot, payload: DiscordActivity) => Activity;
-  presence: (bot: Bot, payload: DiscordPresenceUpdate) => PresenceUpdate;
-  attachment: (bot: Bot, payload: DiscordAttachment) => Attachment;
-  embed: (bot: Bot, payload: DiscordEmbed) => Embed;
-  component: (bot: Bot, payload: DiscordComponent) => Component;
-  webhook: (bot: Bot, payload: DiscordWebhook) => Webhook;
-  auditLogEntry: (bot: Bot, payload: DiscordAuditLogEntry) => AuditLogEntry;
+  invite: (bot: LegacyBot, invite: DiscordInviteCreate) => Invite;
+  application: (bot: LegacyBot, payload: DiscordApplication) => Application;
+  team: (bot: LegacyBot, payload: DiscordTeam) => Team;
+  emoji: (bot: LegacyBot, payload: DiscordEmoji) => Emoji;
+  activity: (bot: LegacyBot, payload: DiscordActivity) => Activity;
+  presence: (bot: LegacyBot, payload: DiscordPresenceUpdate) => PresenceUpdate;
+  attachment: (bot: LegacyBot, payload: DiscordAttachment) => Attachment;
+  embed: (bot: LegacyBot, payload: DiscordEmbed) => Embed;
+  component: (bot: LegacyBot, payload: DiscordComponent) => Component;
+  webhook: (bot: LegacyBot, payload: DiscordWebhook) => Webhook;
+  auditLogEntry: (
+    bot: LegacyBot,
+    payload: DiscordAuditLogEntry
+  ) => AuditLogEntry;
   applicationCommand: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: DiscordApplicationCommand
   ) => ApplicationCommand;
   applicationCommandOption: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: DiscordApplicationCommandOption
   ) => ApplicationCommandOption;
   applicationCommandPermission: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: DiscordGuildApplicationCommandPermissions
   ) => ApplicationCommandPermission;
-  scheduledEvent: (bot: Bot, payload: DiscordScheduledEvent) => ScheduledEvent;
-  threadMember: (bot: Bot, payload: DiscordThreadMember) => ThreadMember;
-  welcomeScreen: (bot: Bot, payload: DiscordWelcomeScreen) => WelcomeScreen;
-  voiceRegion: (bot: Bot, payload: DiscordVoiceRegion) => VoiceRegions;
-  widget: (bot: Bot, payload: DiscordGuildWidget) => GuildWidget;
+  scheduledEvent: (
+    bot: LegacyBot,
+    payload: DiscordScheduledEvent
+  ) => ScheduledEvent;
+  threadMember: (bot: LegacyBot, payload: DiscordThreadMember) => ThreadMember;
+  welcomeScreen: (
+    bot: LegacyBot,
+    payload: DiscordWelcomeScreen
+  ) => WelcomeScreen;
+  voiceRegion: (bot: LegacyBot, payload: DiscordVoiceRegion) => VoiceRegions;
+  widget: (bot: LegacyBot, payload: DiscordGuildWidget) => GuildWidget;
   widgetSettings: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: DiscordGuildWidgetSettings
   ) => GuildWidgetSettings;
-  stageInstance: (bot: Bot, payload: DiscordStageInstance) => StageInstance;
-  sticker: (bot: Bot, payload: DiscordSticker) => Sticker;
-  stickerPack: (bot: Bot, payload: DiscordStickerPack) => StickerPack;
+  stageInstance: (
+    bot: LegacyBot,
+    payload: DiscordStageInstance
+  ) => StageInstance;
+  sticker: (bot: LegacyBot, payload: DiscordSticker) => Sticker;
+  stickerPack: (bot: LegacyBot, payload: DiscordStickerPack) => StickerPack;
   applicationCommandOptionChoice: (
-    bot: Bot,
+    bot: LegacyBot,
     payload: DiscordApplicationCommandOptionChoice
   ) => ApplicationCommandOptionChoice;
-  template: (bot: Bot, payload: DiscordTemplate) => Template;
+  template: (bot: LegacyBot, payload: DiscordTemplate) => Template;
 }
 
 export function createTransformers(options: Partial<Transformers>) {

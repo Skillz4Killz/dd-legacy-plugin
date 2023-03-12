@@ -20,7 +20,11 @@ import { DiscordEmoji } from "../../types/discord.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/emoji#create-guild-emoji}
  */
-export async function createEmoji(bot: Bot, guildId: BigString, options: CreateGuildEmoji): Promise<Emoji> {
+export async function createEmoji(
+  bot: LegacyBot,
+  guildId: BigString,
+  options: CreateGuildEmoji
+): Promise<Emoji> {
   if (options.image && !options.image.startsWith("data:image/")) {
     options.image = await bot.utils.urlToBase64(options.image);
   }
@@ -34,7 +38,7 @@ export async function createEmoji(bot: Bot, guildId: BigString, options: CreateG
       image: options.image,
       roles: options.roles?.map((role) => role.toString()),
       reason: options.reason,
-    },
+    }
   );
 
   return bot.transformers.emoji(bot, result);

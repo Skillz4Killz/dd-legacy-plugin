@@ -2,7 +2,10 @@ import type { Bot } from "../../../bot.ts";
 import { DiscordListArchivedThreads } from "../../../types/discord.ts";
 import { BigString } from "../../../types/shared.ts";
 import { Collection } from "../../../util/collection.ts";
-import { ArchivedThreads, ListArchivedThreads } from "./getPublicArchivedThreads.ts";
+import {
+  ArchivedThreads,
+  ListArchivedThreads,
+} from "./getPublicArchivedThreads.ts";
 
 /**
  * Gets the list of private archived threads the bot is a member of for a channel.
@@ -22,14 +25,14 @@ import { ArchivedThreads, ListArchivedThreads } from "./getPublicArchivedThreads
  * @see {@link https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads}
  */
 export async function getPrivateJoinedArchivedThreads(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
-  options?: ListArchivedThreads,
+  options?: ListArchivedThreads
 ): Promise<ArchivedThreads> {
   const results = await bot.rest.runMethod<DiscordListArchivedThreads>(
     bot.rest,
     "GET",
-    bot.constants.routes.THREAD_ARCHIVED_PRIVATE_JOINED(channelId, options),
+    bot.constants.routes.THREAD_ARCHIVED_PRIVATE_JOINED(channelId, options)
   );
 
   return {
@@ -37,13 +40,13 @@ export async function getPrivateJoinedArchivedThreads(
       results.threads.map((result) => {
         const thread = bot.transformers.channel(bot, { channel: result });
         return [thread.id, thread];
-      }),
+      })
     ),
     members: new Collection(
       results.members.map((result) => {
         const member = bot.transformers.threadMember(bot, result);
         return [member.id!, member];
-      }),
+      })
     ),
     hasMore: results.has_more,
   };

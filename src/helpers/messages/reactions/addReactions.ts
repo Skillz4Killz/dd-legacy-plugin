@@ -23,14 +23,18 @@ import { BigString } from "../../../types/shared.ts";
  * Fires a _Message Reaction Add_ gateway event for every reaction added.
  */
 export async function addReactions(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   messageId: BigString,
   reactions: string[],
-  ordered = false,
+  ordered = false
 ): Promise<void> {
   if (!ordered) {
-    return void await Promise.all(reactions.map((reaction) => bot.helpers.addReaction(channelId, messageId, reaction)));
+    return void (await Promise.all(
+      reactions.map((reaction) =>
+        bot.helpers.addReaction(channelId, messageId, reaction)
+      )
+    ));
   }
 
   for (const reaction of reactions) {

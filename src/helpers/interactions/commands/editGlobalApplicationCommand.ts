@@ -1,6 +1,10 @@
 import type { Bot } from "../../../bot.ts";
 import { ApplicationCommand } from "../../../transformers/applicationCommand.ts";
-import { BigString, CreateApplicationCommand, DiscordApplicationCommand } from "../../../types/mod.ts";
+import {
+  BigString,
+  CreateApplicationCommand,
+  DiscordApplicationCommand,
+} from "../../../types/mod.ts";
 
 /**
  * Edits a global application command.
@@ -13,15 +17,15 @@ import { BigString, CreateApplicationCommand, DiscordApplicationCommand } from "
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command}
  */
 export async function editGlobalApplicationCommand(
-  bot: Bot,
+  bot: LegacyBot,
   commandId: BigString,
-  options: CreateApplicationCommand,
+  options: CreateApplicationCommand
 ): Promise<ApplicationCommand> {
   const result = await bot.rest.runMethod<DiscordApplicationCommand>(
     bot.rest,
     "PATCH",
     bot.constants.routes.COMMANDS_ID(bot.applicationId, commandId),
-    bot.transformers.reverse.createApplicationCommand(bot, options),
+    bot.transformers.reverse.createApplicationCommand(bot, options)
   );
 
   return bot.transformers.applicationCommand(bot, result);

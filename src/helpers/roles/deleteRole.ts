@@ -15,6 +15,14 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/guild#delete-guild-role}
  */
-export async function deleteRole(bot: Bot, guildId: BigString, roleId: BigString): Promise<void> {
-  return await bot.rest.runMethod<void>(bot.rest, "DELETE", bot.constants.routes.GUILD_ROLE(guildId, roleId));
+export async function deleteRole(
+  bot: LegacyBot,
+  guildId: BigString,
+  roleId: BigString
+): Promise<void> {
+  return await bot.rest.runMethod<void>(
+    bot.rest,
+    "DELETE",
+    bot.constants.routes.GUILD_ROLE(guildId, roleId)
+  );
 }

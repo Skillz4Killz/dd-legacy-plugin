@@ -15,10 +15,13 @@ import { BigString, GatewayOpcodes } from "../../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/topics/gateway#update-voice-state}
  */
 export async function leaveVoiceChannel(
-  bot: Bot,
-  guildId: BigString,
+  bot: LegacyBot,
+  guildId: BigString
 ): Promise<void> {
-  const shardId = bot.utils.calculateShardId(bot.gateway, bot.transformers.snowflake(guildId));
+  const shardId = bot.utils.calculateShardId(
+    bot.gateway,
+    bot.transformers.snowflake(guildId)
+  );
   const shard = bot.gateway.manager.shards.get(shardId);
   if (!shard) {
     throw new Error(`Shard (id: ${shardId} not found`);

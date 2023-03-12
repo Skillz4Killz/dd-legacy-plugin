@@ -1,9 +1,9 @@
-import { Bot } from "../../bot.js";
-import { DiscordApplicationCommand } from "../../types/discord.js";
+import { DiscordApplicationCommand } from "@discordeno/bot";
+import { LegacyBot } from "../../index.js";
 import { ApplicationCommand } from "../applicationCommand.js";
 
 export function transformApplicationCommandToDiscordApplicationCommand(
-  bot: Bot,
+  bot: LegacyBot,
   payload: ApplicationCommand
 ): DiscordApplicationCommand {
   return {

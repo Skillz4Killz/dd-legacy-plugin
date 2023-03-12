@@ -19,11 +19,15 @@ import { BigString } from "../../types/shared.ts";
  *
  * @see {@link https://discord.com/developers/docs/resources/channel#get-channel-message}
  */
-export async function getMessage(bot: Bot, channelId: BigString, messageId: BigString): Promise<Message> {
+export async function getMessage(
+  bot: LegacyBot,
+  channelId: BigString,
+  messageId: BigString
+): Promise<Message> {
   const result = await bot.rest.runMethod<DiscordMessage>(
     bot.rest,
     "GET",
-    bot.constants.routes.CHANNEL_MESSAGE(channelId, messageId),
+    bot.constants.routes.CHANNEL_MESSAGE(channelId, messageId)
   );
 
   return bot.transformers.message(bot, result);

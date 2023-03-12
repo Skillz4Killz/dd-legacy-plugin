@@ -20,12 +20,15 @@ import { BigString } from "../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/guild-template#modify-guild-template}
  */
 export async function editGuildTemplate(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   templateCode: string,
-  options: ModifyGuildTemplate,
+  options: ModifyGuildTemplate
 ): Promise<Template> {
-  if (options.name?.length && (options.name.length < 1 || options.name.length > 100)) {
+  if (
+    options.name?.length &&
+    (options.name.length < 1 || options.name.length > 100)
+  ) {
     throw new Error("The name can only be in between 1-100 characters.");
   }
 
@@ -40,7 +43,7 @@ export async function editGuildTemplate(
     {
       name: options.name,
       description: options.description,
-    },
+    }
   );
 
   return bot.transformers.template(bot, result);

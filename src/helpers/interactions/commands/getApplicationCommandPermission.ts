@@ -14,15 +14,20 @@ import { BigString } from "../../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions}
  */
 export async function getApplicationCommandPermission(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
-  commandId: BigString,
+  commandId: BigString
 ): Promise<ApplicationCommandPermission> {
-  const result = await bot.rest.runMethod<DiscordGuildApplicationCommandPermissions>(
-    bot.rest,
-    "GET",
-    bot.constants.routes.COMMANDS_PERMISSION(bot.applicationId, guildId, commandId),
-  );
+  const result =
+    await bot.rest.runMethod<DiscordGuildApplicationCommandPermissions>(
+      bot.rest,
+      "GET",
+      bot.constants.routes.COMMANDS_PERMISSION(
+        bot.applicationId,
+        guildId,
+        commandId
+      )
+    );
 
   return bot.transformers.applicationCommandPermission(bot, result);
 }

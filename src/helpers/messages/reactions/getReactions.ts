@@ -18,25 +18,30 @@ import { Collection } from "../../../util/collection.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#get-reactions}
  */
 export async function getReactions(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
   messageId: BigString,
   reaction: string,
-  options?: GetReactions,
+  options?: GetReactions
 ): Promise<Collection<bigint, User>> {
   reaction = processReactionString(reaction);
 
   const results = await bot.rest.runMethod<DiscordUser[]>(
     bot.rest,
     "GET",
-    bot.constants.routes.CHANNEL_MESSAGE_REACTION(channelId, messageId, reaction, options),
+    bot.constants.routes.CHANNEL_MESSAGE_REACTION(
+      channelId,
+      messageId,
+      reaction,
+      options
+    )
   );
 
   return new Collection(
     results.map((result) => {
       const user = bot.transformers.user(bot, result);
       return [user.id, user];
-    }),
+    })
   );
 }
 

@@ -16,15 +16,15 @@ import { BigString } from "../../../types/shared.ts";
  * @see {@link https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule}
  */
 export async function deleteAutomodRule(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: BigString,
   ruleId: BigString,
-  reason?: string,
+  reason?: string
 ): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "DELETE",
     bot.constants.routes.AUTOMOD_RULE(guildId, ruleId),
-    { reason },
+    { reason }
   );
 }

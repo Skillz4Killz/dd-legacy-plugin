@@ -19,21 +19,23 @@ import { OverwriteReadable } from "../../types/discordeno.ts";
  * @see {@link https://discord.com/developers/docs/resources/channel#edit-channel-permissions}
  */
 export async function editChannelPermissionOverrides(
-  bot: Bot,
+  bot: LegacyBot,
   channelId: BigString,
-  options: EditChannelPermissionOverridesOptions,
+  options: EditChannelPermissionOverridesOptions
 ): Promise<void> {
   return await bot.rest.runMethod<void>(
     bot.rest,
     "PUT",
     bot.constants.routes.CHANNEL_OVERWRITE(channelId, options.id),
     {
-      allow: options.allow ? bot.utils.calculateBits(options.allow) : "0",
-      deny: options.deny ? bot.utils.calculateBits(options.deny) : "0",
+      allow: options.allow ? calculateBits(options.allow) : "0",
+      deny: options.deny ? calculateBits(options.deny) : "0",
       type: options.type,
       reason: options.reason,
-    },
+    }
   );
 }
 
-export interface EditChannelPermissionOverridesOptions extends OverwriteReadable, WithReason {}
+export interface EditChannelPermissionOverridesOptions
+  extends OverwriteReadable,
+    WithReason {}

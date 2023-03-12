@@ -1,7 +1,10 @@
 import type { Bot } from "../../../bot.ts";
 import { Message } from "../../../transformers/message.ts";
 import { DiscordMessage } from "../../../types/discord.ts";
-import { InteractionCallbackData, InteractionResponseTypes } from "../../../types/mod.ts";
+import {
+  InteractionCallbackData,
+  InteractionResponseTypes,
+} from "../../../types/mod.ts";
 
 /**
  * Edits the initial message response to an interaction.
@@ -21,21 +24,24 @@ import { InteractionCallbackData, InteractionResponseTypes } from "../../../type
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response}
  */
 export async function editOriginalInteractionResponse(
-  bot: Bot,
+  bot: LegacyBot,
   token: string,
-  options: InteractionCallbackData,
+  options: InteractionCallbackData
 ): Promise<Message | undefined> {
   const result = await bot.rest.runMethod<DiscordMessage>(
     bot.rest,
     "PATCH",
-    bot.constants.routes.INTERACTION_ORIGINAL_ID_TOKEN(bot.applicationId, token),
+    bot.constants.routes.INTERACTION_ORIGINAL_ID_TOKEN(
+      bot.applicationId,
+      token
+    ),
     {
       ...bot.transformers.reverse.interactionResponse(bot, {
         type: InteractionResponseTypes.UpdateMessage,
         data: options,
       }).data,
       file: options.file,
-    },
+    }
   );
 
   return bot.transformers.message(bot, result);

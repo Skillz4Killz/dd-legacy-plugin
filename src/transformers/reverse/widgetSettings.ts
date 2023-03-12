@@ -1,9 +1,9 @@
-import { Bot } from "../../bot.js";
-import { DiscordGuildWidgetSettings } from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordGuildWidgetSettings } from "@discordeno/types";
 import { GuildWidgetSettings } from "../widgetSettings.js";
 
 export function transformWidgetSettingsToDiscordWidgetSettings(
-  bot: Bot,
+  bot: LegacyBot,
   payload: GuildWidgetSettings
 ): DiscordGuildWidgetSettings {
   return {

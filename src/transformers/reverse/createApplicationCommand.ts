@@ -1,12 +1,12 @@
-import { Bot } from "../../bot.js";
 import {
+  calculateBits,
   CreateApplicationCommand,
   DiscordCreateApplicationCommand,
-  isContextApplicationCommand,
-} from "../../types/mod.js";
+} from "@discordeno/bot";
+import { LegacyBot } from "../../index.js";
 
 export function transformCreateApplicationCommandToDiscordCreateApplicationCommand(
-  bot: Bot,
+  bot: LegacyBot,
   payload: CreateApplicationCommand
 ): DiscordCreateApplicationCommand {
   if (isContextApplicationCommand(payload)) {
@@ -17,7 +17,7 @@ export function transformCreateApplicationCommandToDiscordCreateApplicationComma
       description_localizations: {},
       type: payload.type,
       default_member_permissions: payload.defaultMemberPermissions
-        ? bot.utils.calculateBits(payload.defaultMemberPermissions)
+        ? calculateBits(payload.defaultMemberPermissions)
         : null,
       dm_permission: payload.dmPermission,
     };
@@ -33,7 +33,7 @@ export function transformCreateApplicationCommandToDiscordCreateApplicationComma
       bot.transformers.reverse.applicationCommandOption(bot, option)
     ),
     default_member_permissions: payload.defaultMemberPermissions
-      ? bot.utils.calculateBits(payload.defaultMemberPermissions)
+      ? calculateBits(payload.defaultMemberPermissions)
       : null,
     dm_permission: payload.dmPermission,
   };

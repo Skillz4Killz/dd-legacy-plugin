@@ -18,17 +18,22 @@ import { FileContent, WithReason } from "../../types/discordeno.ts";
  * @see {@link https://discord.com/developers/docs/resources/sticker#create-guild-sticker}
  */
 export async function createGuildSticker(
-  bot: Bot,
+  bot: LegacyBot,
   guildId: bigint,
-  options: CreateGuildStickerOptions,
+  options: CreateGuildStickerOptions
 ): Promise<Sticker> {
-  const result = await bot.rest.runMethod(bot.rest, "POST", bot.constants.routes.GUILD_STICKERS(guildId), {
-    name: options.name,
-    description: options.description,
-    tags: options.tags,
-    file: options.file,
-    reason: options.reason,
-  });
+  const result = await bot.rest.runMethod(
+    bot.rest,
+    "POST",
+    bot.constants.routes.GUILD_STICKERS(guildId),
+    {
+      name: options.name,
+      description: options.description,
+      tags: options.tags,
+      file: options.file,
+      reason: options.reason,
+    }
+  );
   return bot.transformers.sticker(bot, result);
 }
 

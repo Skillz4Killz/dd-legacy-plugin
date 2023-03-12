@@ -1,8 +1,8 @@
-import { Bot } from "../../bot.js";
-import { DiscordGatewayPayload, DiscordReady } from "../../types/discord.js";
+import { LegacyBot } from "../../index.js";
+import { DiscordGatewayPayload, DiscordReady } from "@discordeno/types";
 
 export function handleReady(
-  bot: Bot,
+  bot: LegacyBot,
   data: DiscordGatewayPayload,
   shardId: number
 ) {
